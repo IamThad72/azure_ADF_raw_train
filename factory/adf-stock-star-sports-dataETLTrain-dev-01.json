@@ -1,0 +1,9 @@
+{
+	"name": "adf-stock-star-sports-dataETLTrain-dev-01",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "52171351-1fc8-47aa-8391-86463787719a",
+		"tenantId": "652b9252-3577-4423-863a-3f11b225896c"
+	}
+}
