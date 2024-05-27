@@ -1,0 +1,15 @@
+{
+	"name": "dataset_3S_NFL_Train_Player_Profile_RB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservice_3S_NFL_Train_Target",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "CosmosDbSqlApiCollection",
+		"schema": {},
+		"typeProperties": {
+			"collectionName": "position_RB"
+		}
+	}
+}
