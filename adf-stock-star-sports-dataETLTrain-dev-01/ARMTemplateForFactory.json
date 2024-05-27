@@ -1,0 +1,510 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-stock-star-sports-dataETLTrain-dev-01"
+		},
+		"linkedservice_3S_NFL_Raw_Source_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'linkedservice_3S_NFL_Raw_Source'"
+		},
+		"linkedservice_3S_NFL_Train_Target_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'linkedservice_3S_NFL_Train_Target'"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline_3S_Raw_Player_Profile_2_Train_RB')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copy_Raw_RB",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "CosmosDbSqlApiSource",
+								"query": "SELECT * FROM c where c.position = \"RB\"",
+								"preferredRegions": []
+							},
+							"sink": {
+								"type": "CosmosDbSqlApiSink",
+								"writeBehavior": "insert"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "dataset_3S_NFL_Raw_Player_Profile",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "dataset_3S_NFL_Train_Player_Profile_RB",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/dataset_3S_NFL_Raw_Player_Profile')]",
+				"[concat(variables('factoryId'), '/datasets/dataset_3S_NFL_Train_Player_Profile_RB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataset_3S_NFL_Raw_Player_Profile')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "linkedservice_3S_NFL_Raw_Source",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "CosmosDbSqlApiCollection",
+				"schema": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"type": "string"
+						},
+						"jersey": {
+							"type": "string"
+						},
+						"last_name": {
+							"type": "string"
+						},
+						"first_name": {
+							"type": "string"
+						},
+						"abbr_name": {
+							"type": "string"
+						},
+						"birth_date": {
+							"type": "string"
+						},
+						"weight": {
+							"type": "integer"
+						},
+						"height": {
+							"type": "integer"
+						},
+						"position": {
+							"type": "string"
+						},
+						"college": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string"
+						},
+						"seasons": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "string"
+									},
+									"year": {
+										"type": "integer"
+									},
+									"type": {
+										"type": "string"
+									},
+									"name": {
+										"type": "string"
+									},
+									"teams": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string"
+												},
+												"name": {
+													"type": "string"
+												},
+												"market": {
+													"type": "string"
+												},
+												"alias": {
+													"type": "string"
+												},
+												"sr_id": {
+													"type": "string"
+												},
+												"statistics": {
+													"type": "object",
+													"properties": {
+														"games_played": {
+															"type": "integer"
+														},
+														"games_started": {
+															"type": "integer"
+														},
+														"rushing": {
+															"type": "object",
+															"properties": {
+																"avg_yards": {
+																	"type": "number"
+																},
+																"attempts": {
+																	"type": "integer"
+																},
+																"touchdowns": {
+																	"type": "integer"
+																},
+																"yards": {
+																	"type": "integer"
+																},
+																"longest": {
+																	"type": "integer"
+																},
+																"longest_touchdown": {
+																	"type": "integer"
+																},
+																"redzone_attempts": {
+																	"type": "integer"
+																},
+																"tlost": {
+																	"type": "integer"
+																},
+																"tlost_yards": {
+																	"type": "integer"
+																},
+																"first_downs": {
+																	"type": "integer"
+																},
+																"broken_tackles": {
+																	"type": "integer"
+																},
+																"kneel_downs": {
+																	"type": "integer"
+																},
+																"scrambles": {
+																	"type": "integer"
+																},
+																"yards_after_contact": {
+																	"type": "integer"
+																}
+															}
+														},
+														"receiving": {
+															"type": "object",
+															"properties": {
+																"receptions": {
+																	"type": "integer"
+																},
+																"targets": {
+																	"type": "integer"
+																},
+																"yards": {
+																	"type": "integer"
+																},
+																"avg_yards": {
+																	"type": "integer"
+																},
+																"longest": {
+																	"type": "integer"
+																},
+																"touchdowns": {
+																	"type": "integer"
+																},
+																"longest_touchdown": {
+																	"type": "integer"
+																},
+																"yards_after_catch": {
+																	"type": "integer"
+																},
+																"redzone_targets": {
+																	"type": "integer"
+																},
+																"air_yards": {
+																	"type": "integer"
+																},
+																"first_downs": {
+																	"type": "integer"
+																},
+																"broken_tackles": {
+																	"type": "integer"
+																},
+																"dropped_passes": {
+																	"type": "integer"
+																},
+																"catchable_passes": {
+																	"type": "integer"
+																},
+																"yards_after_contact": {
+																	"type": "integer"
+																}
+															}
+														},
+														"penalties": {
+															"type": "object",
+															"properties": {
+																"penalties": {
+																	"type": "integer"
+																},
+																"yards": {
+																	"type": "integer"
+																},
+																"first_downs": {
+																	"type": "integer"
+																}
+															}
+														},
+														"kick_returns": {
+															"type": "object",
+															"properties": {
+																"returns": {
+																	"type": "integer"
+																},
+																"yards": {
+																	"type": "integer"
+																},
+																"avg_yards": {
+																	"type": "number"
+																},
+																"touchdowns": {
+																	"type": "integer"
+																},
+																"longest": {
+																	"type": "integer"
+																},
+																"faircatches": {
+																	"type": "integer"
+																},
+																"longest_touchdown": {
+																	"type": "integer"
+																}
+															}
+														},
+														"fumbles": {
+															"type": "object",
+															"properties": {
+																"fumbles": {
+																	"type": "integer"
+																},
+																"lost_fumbles": {
+																	"type": "integer"
+																},
+																"own_rec": {
+																	"type": "integer"
+																},
+																"own_rec_yards": {
+																	"type": "integer"
+																},
+																"opp_rec": {
+																	"type": "integer"
+																},
+																"opp_rec_yards": {
+																	"type": "integer"
+																},
+																"out_of_bounds": {
+																	"type": "integer"
+																},
+																"forced_fumbles": {
+																	"type": "integer"
+																},
+																"own_rec_tds": {
+																	"type": "integer"
+																},
+																"opp_rec_tds": {
+																	"type": "integer"
+																},
+																"ez_rec_tds": {
+																	"type": "integer"
+																}
+															}
+														},
+														"defense": {
+															"type": "object",
+															"properties": {
+																"tackles": {
+																	"type": "integer"
+																},
+																"assists": {
+																	"type": "integer"
+																},
+																"combined": {
+																	"type": "integer"
+																},
+																"sacks": {
+																	"type": "integer"
+																},
+																"sack_yards": {
+																	"type": "integer"
+																},
+																"interceptions": {
+																	"type": "integer"
+																},
+																"passes_defended": {
+																	"type": "integer"
+																},
+																"forced_fumbles": {
+																	"type": "integer"
+																},
+																"fumble_recoveries": {
+																	"type": "integer"
+																},
+																"qb_hits": {
+																	"type": "integer"
+																},
+																"tloss": {
+																	"type": "integer"
+																},
+																"tloss_yards": {
+																	"type": "integer"
+																},
+																"safeties": {
+																	"type": "integer"
+																},
+																"sp_tackles": {
+																	"type": "integer"
+																},
+																"sp_assists": {
+																	"type": "integer"
+																},
+																"sp_forced_fumbles": {
+																	"type": "integer"
+																},
+																"sp_fumble_recoveries": {
+																	"type": "integer"
+																},
+																"sp_blocks": {
+																	"type": "integer"
+																},
+																"misc_tackles": {
+																	"type": "integer"
+																},
+																"misc_assists": {
+																	"type": "integer"
+																},
+																"misc_forced_fumbles": {
+																	"type": "integer"
+																},
+																"misc_fumble_recoveries": {
+																	"type": "integer"
+																},
+																"def_targets": {
+																	"type": "integer"
+																},
+																"def_comps": {
+																	"type": "integer"
+																},
+																"blitzes": {
+																	"type": "integer"
+																},
+																"hurries": {
+																	"type": "integer"
+																},
+																"knockdowns": {
+																	"type": "integer"
+																},
+																"missed_tackles": {
+																	"type": "integer"
+																},
+																"batted_passes": {
+																	"type": "integer"
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						},
+						"_comment": {
+							"type": "string"
+						},
+						"birth_place": {
+							"type": "string"
+						}
+					}
+				},
+				"typeProperties": {
+					"collectionName": "player_profile"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/linkedservice_3S_NFL_Raw_Source')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataset_3S_NFL_Train_Player_Profile_RB')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "linkedservice_3S_NFL_Train_Target",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "CosmosDbSqlApiCollection",
+				"schema": {},
+				"typeProperties": {
+					"collectionName": "position_RB"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/linkedservice_3S_NFL_Train_Target')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/linkedservice_3S_NFL_Raw_Source')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "CosmosDb",
+				"typeProperties": {
+					"connectionString": "[parameters('linkedservice_3S_NFL_Raw_Source_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/linkedservice_3S_NFL_Train_Target')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "CosmosDb",
+				"typeProperties": {
+					"connectionString": "[parameters('linkedservice_3S_NFL_Train_Target_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

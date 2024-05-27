@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-stock-star-sports-dataETLTrain-dev-01"
+		},
+		"linkedservice_3S_NFL_Raw_Source_connectionString": {
+			"value": ""
+		},
+		"linkedservice_3S_NFL_Train_Target_connectionString": {
+			"value": ""
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
