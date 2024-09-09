@@ -1,0 +1,2831 @@
+{
+	"name": "dataset_3S_NFL_Raw_Game_Statistics",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservice_3S_NFL_Raw_Source",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "CosmosDbSqlApiCollection",
+		"schema": {
+			"type": "object",
+			"properties": {
+				"status": {
+					"type": "string"
+				},
+				"scheduled": {
+					"type": "string"
+				},
+				"attendance": {
+					"type": "integer"
+				},
+				"utc_offset": {
+					"type": "integer"
+				},
+				"entry_mode": {
+					"type": "string"
+				},
+				"clock": {
+					"type": "string"
+				},
+				"quarter": {
+					"type": "integer"
+				},
+				"summary": {
+					"type": "object",
+					"properties": {
+						"season": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"year": {
+									"type": "integer"
+								},
+								"type": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								}
+							}
+						},
+						"week": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"sequence": {
+									"type": "integer"
+								},
+								"title": {
+									"type": "string"
+								}
+							}
+						},
+						"venue": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"city": {
+									"type": "string"
+								},
+								"state": {
+									"type": "string"
+								},
+								"zip": {
+									"type": "string"
+								},
+								"address": {
+									"type": "string"
+								},
+								"capacity": {
+									"type": "integer"
+								},
+								"surface": {
+									"type": "string"
+								},
+								"roof_type": {
+									"type": "string"
+								},
+								"sr_id": {
+									"type": "string"
+								},
+								"country": {
+									"type": "string"
+								},
+								"location": {
+									"type": "object",
+									"properties": {
+										"lat": {
+											"type": "string"
+										},
+										"lng": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						},
+						"home": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"market": {
+									"type": "string"
+								},
+								"alias": {
+									"type": "string"
+								},
+								"sr_id": {
+									"type": "string"
+								},
+								"used_timeouts": {
+									"type": "integer"
+								},
+								"remaining_timeouts": {
+									"type": "integer"
+								},
+								"points": {
+									"type": "integer"
+								}
+							}
+						},
+						"away": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"market": {
+									"type": "string"
+								},
+								"alias": {
+									"type": "string"
+								},
+								"sr_id": {
+									"type": "string"
+								},
+								"used_timeouts": {
+									"type": "integer"
+								},
+								"remaining_timeouts": {
+									"type": "integer"
+								},
+								"points": {
+									"type": "integer"
+								}
+							}
+						}
+					}
+				},
+				"statistics": {
+					"type": "object",
+					"properties": {
+						"home": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"market": {
+									"type": "string"
+								},
+								"alias": {
+									"type": "string"
+								},
+								"sr_id": {
+									"type": "string"
+								},
+								"summary": {
+									"type": "object",
+									"properties": {
+										"possession_time": {
+											"type": "string"
+										},
+										"avg_gain": {
+											"type": "number"
+										},
+										"safeties": {
+											"type": "integer"
+										},
+										"turnovers": {
+											"type": "integer"
+										},
+										"play_count": {
+											"type": "integer"
+										},
+										"rush_plays": {
+											"type": "integer"
+										},
+										"total_yards": {
+											"type": "integer"
+										},
+										"fumbles": {
+											"type": "integer"
+										},
+										"lost_fumbles": {
+											"type": "integer"
+										},
+										"penalties": {
+											"type": "integer"
+										},
+										"penalty_yards": {
+											"type": "integer"
+										},
+										"return_yards": {
+											"type": "integer"
+										}
+									}
+								},
+								"rushing": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"avg_yards": {
+													"type": "number"
+												},
+												"attempts": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"tlost": {
+													"type": "integer"
+												},
+												"tlost_yards": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												},
+												"redzone_attempts": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"avg_yards": {
+														"type": "integer"
+													},
+													"attempts": {
+														"type": "integer"
+													},
+													"touchdowns": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"longest_touchdown": {
+														"type": "integer"
+													},
+													"redzone_attempts": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"receiving": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"targets": {
+													"type": "integer"
+												},
+												"receptions": {
+													"type": "integer"
+												},
+												"avg_yards": {
+													"type": "number"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"yards_after_catch": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												},
+												"redzone_targets": {
+													"type": "integer"
+												},
+												"air_yards": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"receptions": {
+														"type": "integer"
+													},
+													"targets": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"avg_yards": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"touchdowns": {
+														"type": "integer"
+													},
+													"longest_touchdown": {
+														"type": "integer"
+													},
+													"yards_after_catch": {
+														"type": "integer"
+													},
+													"redzone_targets": {
+														"type": "integer"
+													},
+													"air_yards": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"punts": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"net_yards": {
+													"type": "integer"
+												},
+												"blocked": {
+													"type": "integer"
+												},
+												"touchbacks": {
+													"type": "integer"
+												},
+												"inside_20": {
+													"type": "integer"
+												},
+												"return_yards": {
+													"type": "integer"
+												},
+												"avg_net_yards": {
+													"type": "number"
+												},
+												"avg_yards": {
+													"type": "number"
+												},
+												"longest": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"attempts": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"avg_yards": {
+														"type": "number"
+													},
+													"blocked": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"touchbacks": {
+														"type": "integer"
+													},
+													"inside_20": {
+														"type": "integer"
+													},
+													"avg_net_yards": {
+														"type": "number"
+													},
+													"return_yards": {
+														"type": "integer"
+													},
+													"net_yards": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"punt_returns": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"avg_yards": {
+													"type": "number"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												},
+												"faircatches": {
+													"type": "integer"
+												},
+												"number": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"avg_yards": {
+														"type": "integer"
+													},
+													"touchdowns": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"faircatches": {
+														"type": "integer"
+													},
+													"longest_touchdown": {
+														"type": "integer"
+													},
+													"number": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"penalties": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"penalties": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"penalties": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"passing": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"completions": {
+													"type": "integer"
+												},
+												"cmp_pct": {
+													"type": "number"
+												},
+												"interceptions": {
+													"type": "integer"
+												},
+												"sack_yards": {
+													"type": "integer"
+												},
+												"rating": {
+													"type": "number"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"avg_yards": {
+													"type": "number"
+												},
+												"sacks": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												},
+												"air_yards": {
+													"type": "integer"
+												},
+												"redzone_attempts": {
+													"type": "integer"
+												},
+												"net_yards": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"attempts": {
+														"type": "integer"
+													},
+													"completions": {
+														"type": "integer"
+													},
+													"cmp_pct": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"avg_yards": {
+														"type": "integer"
+													},
+													"sacks": {
+														"type": "integer"
+													},
+													"sack_yards": {
+														"type": "integer"
+													},
+													"touchdowns": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"interceptions": {
+														"type": "integer"
+													},
+													"rating": {
+														"type": "number"
+													},
+													"longest_touchdown": {
+														"type": "integer"
+													},
+													"air_yards": {
+														"type": "integer"
+													},
+													"redzone_attempts": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"misc_returns": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"yards": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"blk_fg_touchdowns": {
+													"type": "integer"
+												},
+												"blk_punt_touchdowns": {
+													"type": "integer"
+												},
+												"fg_return_touchdowns": {
+													"type": "integer"
+												},
+												"ez_rec_touchdowns": {
+													"type": "integer"
+												},
+												"number": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array"
+										}
+									}
+								},
+								"kickoffs": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"endzone": {
+													"type": "integer"
+												},
+												"inside_20": {
+													"type": "integer"
+												},
+												"return_yards": {
+													"type": "integer"
+												},
+												"touchbacks": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"out_of_bounds": {
+													"type": "integer"
+												},
+												"number": {
+													"type": "integer"
+												},
+												"total_endzone": {
+													"type": "integer"
+												},
+												"onside_attempts": {
+													"type": "integer"
+												},
+												"onside_successes": {
+													"type": "integer"
+												},
+												"squib_kicks": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"endzone": {
+														"type": "integer"
+													},
+													"inside_20": {
+														"type": "integer"
+													},
+													"return_yards": {
+														"type": "integer"
+													},
+													"touchbacks": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"out_of_bounds": {
+														"type": "integer"
+													},
+													"number": {
+														"type": "integer"
+													},
+													"total_endzone": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"kick_returns": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"avg_yards": {
+													"type": "number"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												},
+												"faircatches": {
+													"type": "integer"
+												},
+												"number": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"avg_yards": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"touchdowns": {
+														"type": "integer"
+													},
+													"longest_touchdown": {
+														"type": "integer"
+													},
+													"faircatches": {
+														"type": "integer"
+													},
+													"number": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"int_returns": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"avg_yards": {
+													"type": "number"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"number": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array"
+										}
+									}
+								},
+								"fumbles": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"fumbles": {
+													"type": "integer"
+												},
+												"lost_fumbles": {
+													"type": "integer"
+												},
+												"own_rec": {
+													"type": "integer"
+												},
+												"own_rec_yards": {
+													"type": "integer"
+												},
+												"opp_rec": {
+													"type": "integer"
+												},
+												"opp_rec_yards": {
+													"type": "integer"
+												},
+												"out_of_bounds": {
+													"type": "integer"
+												},
+												"forced_fumbles": {
+													"type": "integer"
+												},
+												"own_rec_tds": {
+													"type": "integer"
+												},
+												"opp_rec_tds": {
+													"type": "integer"
+												},
+												"ez_rec_tds": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"fumbles": {
+														"type": "integer"
+													},
+													"lost_fumbles": {
+														"type": "integer"
+													},
+													"own_rec": {
+														"type": "integer"
+													},
+													"own_rec_yards": {
+														"type": "integer"
+													},
+													"opp_rec": {
+														"type": "integer"
+													},
+													"opp_rec_yards": {
+														"type": "integer"
+													},
+													"out_of_bounds": {
+														"type": "integer"
+													},
+													"forced_fumbles": {
+														"type": "integer"
+													},
+													"own_rec_tds": {
+														"type": "integer"
+													},
+													"opp_rec_tds": {
+														"type": "integer"
+													},
+													"ez_rec_tds": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"field_goals": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"made": {
+													"type": "integer"
+												},
+												"blocked": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"avg_yards": {
+													"type": "number"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"net_attempts": {
+													"type": "integer"
+												},
+												"pct": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"attempts": {
+														"type": "integer"
+													},
+													"made": {
+														"type": "integer"
+													},
+													"blocked": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"avg_yards": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"pct": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"defense": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"tackles": {
+													"type": "integer"
+												},
+												"assists": {
+													"type": "integer"
+												},
+												"combined": {
+													"type": "integer"
+												},
+												"sacks": {
+													"type": "integer"
+												},
+												"sack_yards": {
+													"type": "integer"
+												},
+												"interceptions": {
+													"type": "integer"
+												},
+												"passes_defended": {
+													"type": "integer"
+												},
+												"forced_fumbles": {
+													"type": "integer"
+												},
+												"fumble_recoveries": {
+													"type": "integer"
+												},
+												"qb_hits": {
+													"type": "integer"
+												},
+												"tloss": {
+													"type": "integer"
+												},
+												"tloss_yards": {
+													"type": "integer"
+												},
+												"safeties": {
+													"type": "integer"
+												},
+												"sp_tackles": {
+													"type": "integer"
+												},
+												"sp_assists": {
+													"type": "integer"
+												},
+												"sp_forced_fumbles": {
+													"type": "integer"
+												},
+												"sp_fumble_recoveries": {
+													"type": "integer"
+												},
+												"sp_blocks": {
+													"type": "integer"
+												},
+												"misc_tackles": {
+													"type": "integer"
+												},
+												"misc_assists": {
+													"type": "integer"
+												},
+												"misc_forced_fumbles": {
+													"type": "integer"
+												},
+												"misc_fumble_recoveries": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"tackles": {
+														"type": "integer"
+													},
+													"assists": {
+														"type": "integer"
+													},
+													"combined": {
+														"type": "integer"
+													},
+													"sacks": {
+														"type": "integer"
+													},
+													"sack_yards": {
+														"type": "integer"
+													},
+													"interceptions": {
+														"type": "integer"
+													},
+													"passes_defended": {
+														"type": "integer"
+													},
+													"forced_fumbles": {
+														"type": "integer"
+													},
+													"fumble_recoveries": {
+														"type": "integer"
+													},
+													"qb_hits": {
+														"type": "integer"
+													},
+													"tloss": {
+														"type": "integer"
+													},
+													"tloss_yards": {
+														"type": "integer"
+													},
+													"safeties": {
+														"type": "integer"
+													},
+													"sp_tackles": {
+														"type": "integer"
+													},
+													"sp_assists": {
+														"type": "integer"
+													},
+													"sp_forced_fumbles": {
+														"type": "integer"
+													},
+													"sp_fumble_recoveries": {
+														"type": "integer"
+													},
+													"sp_blocks": {
+														"type": "integer"
+													},
+													"misc_tackles": {
+														"type": "integer"
+													},
+													"misc_assists": {
+														"type": "integer"
+													},
+													"misc_forced_fumbles": {
+														"type": "integer"
+													},
+													"misc_fumble_recoveries": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"extra_points": {
+									"type": "object",
+									"properties": {
+										"kicks": {
+											"type": "object",
+											"properties": {
+												"totals": {
+													"type": "object",
+													"properties": {
+														"attempts": {
+															"type": "integer"
+														},
+														"blocked": {
+															"type": "integer"
+														},
+														"made": {
+															"type": "integer"
+														},
+														"pct": {
+															"type": "integer"
+														}
+													}
+												},
+												"players": {
+													"type": "array"
+												}
+											}
+										},
+										"conversions": {
+											"type": "object",
+											"properties": {
+												"totals": {
+													"type": "object",
+													"properties": {
+														"pass_attempts": {
+															"type": "integer"
+														},
+														"pass_successes": {
+															"type": "integer"
+														},
+														"rush_attempts": {
+															"type": "integer"
+														},
+														"rush_successes": {
+															"type": "integer"
+														},
+														"defense_attempts": {
+															"type": "integer"
+														},
+														"defense_successes": {
+															"type": "integer"
+														},
+														"turnover_successes": {
+															"type": "integer"
+														}
+													}
+												},
+												"players": {
+													"type": "array"
+												}
+											}
+										}
+									}
+								},
+								"first_downs": {
+									"type": "object",
+									"properties": {
+										"pass": {
+											"type": "integer"
+										},
+										"penalty": {
+											"type": "integer"
+										},
+										"rush": {
+											"type": "integer"
+										},
+										"total": {
+											"type": "integer"
+										}
+									}
+								},
+								"interceptions": {
+									"type": "object",
+									"properties": {
+										"return_yards": {
+											"type": "integer"
+										},
+										"returned": {
+											"type": "integer"
+										},
+										"number": {
+											"type": "integer"
+										}
+									}
+								},
+								"touchdowns": {
+									"type": "object",
+									"properties": {
+										"pass": {
+											"type": "integer"
+										},
+										"rush": {
+											"type": "integer"
+										},
+										"total_return": {
+											"type": "integer"
+										},
+										"total": {
+											"type": "integer"
+										},
+										"fumble_return": {
+											"type": "integer"
+										},
+										"int_return": {
+											"type": "integer"
+										},
+										"kick_return": {
+											"type": "integer"
+										},
+										"punt_return": {
+											"type": "integer"
+										},
+										"other": {
+											"type": "integer"
+										}
+									}
+								},
+								"efficiency": {
+									"type": "object",
+									"properties": {
+										"goaltogo": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"successes": {
+													"type": "integer"
+												},
+												"pct": {
+													"type": "number"
+												}
+											}
+										},
+										"redzone": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"successes": {
+													"type": "integer"
+												},
+												"pct": {
+													"type": "number"
+												}
+											}
+										},
+										"thirddown": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"successes": {
+													"type": "integer"
+												},
+												"pct": {
+													"type": "number"
+												}
+											}
+										},
+										"fourthdown": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"successes": {
+													"type": "integer"
+												},
+												"pct": {
+													"type": "integer"
+												}
+											}
+										}
+									}
+								}
+							}
+						},
+						"away": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"market": {
+									"type": "string"
+								},
+								"alias": {
+									"type": "string"
+								},
+								"sr_id": {
+									"type": "string"
+								},
+								"summary": {
+									"type": "object",
+									"properties": {
+										"possession_time": {
+											"type": "string"
+										},
+										"avg_gain": {
+											"type": "number"
+										},
+										"safeties": {
+											"type": "integer"
+										},
+										"turnovers": {
+											"type": "integer"
+										},
+										"play_count": {
+											"type": "integer"
+										},
+										"rush_plays": {
+											"type": "integer"
+										},
+										"total_yards": {
+											"type": "integer"
+										},
+										"fumbles": {
+											"type": "integer"
+										},
+										"lost_fumbles": {
+											"type": "integer"
+										},
+										"penalties": {
+											"type": "integer"
+										},
+										"penalty_yards": {
+											"type": "integer"
+										},
+										"return_yards": {
+											"type": "integer"
+										}
+									}
+								},
+								"rushing": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"avg_yards": {
+													"type": "number"
+												},
+												"attempts": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"tlost": {
+													"type": "integer"
+												},
+												"tlost_yards": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												},
+												"redzone_attempts": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"avg_yards": {
+														"type": "integer"
+													},
+													"attempts": {
+														"type": "integer"
+													},
+													"touchdowns": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"longest_touchdown": {
+														"type": "integer"
+													},
+													"redzone_attempts": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"receiving": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"targets": {
+													"type": "integer"
+												},
+												"receptions": {
+													"type": "integer"
+												},
+												"avg_yards": {
+													"type": "number"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"yards_after_catch": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												},
+												"redzone_targets": {
+													"type": "integer"
+												},
+												"air_yards": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"receptions": {
+														"type": "integer"
+													},
+													"targets": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"avg_yards": {
+														"type": "number"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"touchdowns": {
+														"type": "integer"
+													},
+													"longest_touchdown": {
+														"type": "integer"
+													},
+													"yards_after_catch": {
+														"type": "integer"
+													},
+													"redzone_targets": {
+														"type": "integer"
+													},
+													"air_yards": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"punts": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"net_yards": {
+													"type": "integer"
+												},
+												"blocked": {
+													"type": "integer"
+												},
+												"touchbacks": {
+													"type": "integer"
+												},
+												"inside_20": {
+													"type": "integer"
+												},
+												"return_yards": {
+													"type": "integer"
+												},
+												"avg_net_yards": {
+													"type": "number"
+												},
+												"avg_yards": {
+													"type": "number"
+												},
+												"longest": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"attempts": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"avg_yards": {
+														"type": "number"
+													},
+													"blocked": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"touchbacks": {
+														"type": "integer"
+													},
+													"inside_20": {
+														"type": "integer"
+													},
+													"avg_net_yards": {
+														"type": "number"
+													},
+													"return_yards": {
+														"type": "integer"
+													},
+													"net_yards": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"punt_returns": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"avg_yards": {
+													"type": "number"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												},
+												"faircatches": {
+													"type": "integer"
+												},
+												"number": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"avg_yards": {
+														"type": "integer"
+													},
+													"touchdowns": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"faircatches": {
+														"type": "integer"
+													},
+													"longest_touchdown": {
+														"type": "integer"
+													},
+													"number": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"penalties": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"penalties": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"penalties": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"passing": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"completions": {
+													"type": "integer"
+												},
+												"cmp_pct": {
+													"type": "number"
+												},
+												"interceptions": {
+													"type": "integer"
+												},
+												"sack_yards": {
+													"type": "integer"
+												},
+												"rating": {
+													"type": "number"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"avg_yards": {
+													"type": "number"
+												},
+												"sacks": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												},
+												"air_yards": {
+													"type": "integer"
+												},
+												"redzone_attempts": {
+													"type": "integer"
+												},
+												"net_yards": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"attempts": {
+														"type": "integer"
+													},
+													"completions": {
+														"type": "integer"
+													},
+													"cmp_pct": {
+														"type": "number"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"avg_yards": {
+														"type": "number"
+													},
+													"sacks": {
+														"type": "integer"
+													},
+													"sack_yards": {
+														"type": "integer"
+													},
+													"touchdowns": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"interceptions": {
+														"type": "integer"
+													},
+													"rating": {
+														"type": "number"
+													},
+													"longest_touchdown": {
+														"type": "integer"
+													},
+													"air_yards": {
+														"type": "integer"
+													},
+													"redzone_attempts": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"misc_returns": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"yards": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"blk_fg_touchdowns": {
+													"type": "integer"
+												},
+												"blk_punt_touchdowns": {
+													"type": "integer"
+												},
+												"fg_return_touchdowns": {
+													"type": "integer"
+												},
+												"ez_rec_touchdowns": {
+													"type": "integer"
+												},
+												"number": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array"
+										}
+									}
+								},
+								"kickoffs": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"endzone": {
+													"type": "integer"
+												},
+												"inside_20": {
+													"type": "integer"
+												},
+												"return_yards": {
+													"type": "integer"
+												},
+												"touchbacks": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"out_of_bounds": {
+													"type": "integer"
+												},
+												"number": {
+													"type": "integer"
+												},
+												"total_endzone": {
+													"type": "integer"
+												},
+												"onside_attempts": {
+													"type": "integer"
+												},
+												"onside_successes": {
+													"type": "integer"
+												},
+												"squib_kicks": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"endzone": {
+														"type": "integer"
+													},
+													"inside_20": {
+														"type": "integer"
+													},
+													"return_yards": {
+														"type": "integer"
+													},
+													"touchbacks": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"out_of_bounds": {
+														"type": "integer"
+													},
+													"number": {
+														"type": "integer"
+													},
+													"total_endzone": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"kick_returns": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"avg_yards": {
+													"type": "number"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												},
+												"faircatches": {
+													"type": "integer"
+												},
+												"number": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"avg_yards": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"touchdowns": {
+														"type": "integer"
+													},
+													"longest_touchdown": {
+														"type": "integer"
+													},
+													"faircatches": {
+														"type": "integer"
+													},
+													"number": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"int_returns": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"avg_yards": {
+													"type": "number"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"touchdowns": {
+													"type": "integer"
+												},
+												"number": {
+													"type": "integer"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"longest_touchdown": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array"
+										}
+									}
+								},
+								"fumbles": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"fumbles": {
+													"type": "integer"
+												},
+												"lost_fumbles": {
+													"type": "integer"
+												},
+												"own_rec": {
+													"type": "integer"
+												},
+												"own_rec_yards": {
+													"type": "integer"
+												},
+												"opp_rec": {
+													"type": "integer"
+												},
+												"opp_rec_yards": {
+													"type": "integer"
+												},
+												"out_of_bounds": {
+													"type": "integer"
+												},
+												"forced_fumbles": {
+													"type": "integer"
+												},
+												"own_rec_tds": {
+													"type": "integer"
+												},
+												"opp_rec_tds": {
+													"type": "integer"
+												},
+												"ez_rec_tds": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"fumbles": {
+														"type": "integer"
+													},
+													"lost_fumbles": {
+														"type": "integer"
+													},
+													"own_rec": {
+														"type": "integer"
+													},
+													"own_rec_yards": {
+														"type": "integer"
+													},
+													"opp_rec": {
+														"type": "integer"
+													},
+													"opp_rec_yards": {
+														"type": "integer"
+													},
+													"out_of_bounds": {
+														"type": "integer"
+													},
+													"forced_fumbles": {
+														"type": "integer"
+													},
+													"own_rec_tds": {
+														"type": "integer"
+													},
+													"opp_rec_tds": {
+														"type": "integer"
+													},
+													"ez_rec_tds": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"field_goals": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"made": {
+													"type": "integer"
+												},
+												"blocked": {
+													"type": "integer"
+												},
+												"yards": {
+													"type": "integer"
+												},
+												"avg_yards": {
+													"type": "number"
+												},
+												"longest": {
+													"type": "integer"
+												},
+												"net_attempts": {
+													"type": "integer"
+												},
+												"pct": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"attempts": {
+														"type": "integer"
+													},
+													"made": {
+														"type": "integer"
+													},
+													"blocked": {
+														"type": "integer"
+													},
+													"yards": {
+														"type": "integer"
+													},
+													"avg_yards": {
+														"type": "number"
+													},
+													"longest": {
+														"type": "integer"
+													},
+													"pct": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"defense": {
+									"type": "object",
+									"properties": {
+										"totals": {
+											"type": "object",
+											"properties": {
+												"tackles": {
+													"type": "integer"
+												},
+												"assists": {
+													"type": "integer"
+												},
+												"combined": {
+													"type": "integer"
+												},
+												"sacks": {
+													"type": "integer"
+												},
+												"sack_yards": {
+													"type": "integer"
+												},
+												"interceptions": {
+													"type": "integer"
+												},
+												"passes_defended": {
+													"type": "integer"
+												},
+												"forced_fumbles": {
+													"type": "integer"
+												},
+												"fumble_recoveries": {
+													"type": "integer"
+												},
+												"qb_hits": {
+													"type": "integer"
+												},
+												"tloss": {
+													"type": "integer"
+												},
+												"tloss_yards": {
+													"type": "integer"
+												},
+												"safeties": {
+													"type": "integer"
+												},
+												"sp_tackles": {
+													"type": "integer"
+												},
+												"sp_assists": {
+													"type": "integer"
+												},
+												"sp_forced_fumbles": {
+													"type": "integer"
+												},
+												"sp_fumble_recoveries": {
+													"type": "integer"
+												},
+												"sp_blocks": {
+													"type": "integer"
+												},
+												"misc_tackles": {
+													"type": "integer"
+												},
+												"misc_assists": {
+													"type": "integer"
+												},
+												"misc_forced_fumbles": {
+													"type": "integer"
+												},
+												"misc_fumble_recoveries": {
+													"type": "integer"
+												},
+												"def_targets": {
+													"type": "integer"
+												},
+												"def_comps": {
+													"type": "integer"
+												},
+												"blitzes": {
+													"type": "integer"
+												},
+												"hurries": {
+													"type": "integer"
+												},
+												"knockdowns": {
+													"type": "integer"
+												},
+												"missed_tackles": {
+													"type": "integer"
+												}
+											}
+										},
+										"players": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"jersey": {
+														"type": "string"
+													},
+													"position": {
+														"type": "string"
+													},
+													"tackles": {
+														"type": "integer"
+													},
+													"assists": {
+														"type": "integer"
+													},
+													"combined": {
+														"type": "integer"
+													},
+													"sacks": {
+														"type": "integer"
+													},
+													"sack_yards": {
+														"type": "integer"
+													},
+													"interceptions": {
+														"type": "integer"
+													},
+													"passes_defended": {
+														"type": "integer"
+													},
+													"forced_fumbles": {
+														"type": "integer"
+													},
+													"fumble_recoveries": {
+														"type": "integer"
+													},
+													"qb_hits": {
+														"type": "integer"
+													},
+													"tloss": {
+														"type": "integer"
+													},
+													"tloss_yards": {
+														"type": "integer"
+													},
+													"safeties": {
+														"type": "integer"
+													},
+													"sp_tackles": {
+														"type": "integer"
+													},
+													"sp_assists": {
+														"type": "integer"
+													},
+													"sp_forced_fumbles": {
+														"type": "integer"
+													},
+													"sp_fumble_recoveries": {
+														"type": "integer"
+													},
+													"sp_blocks": {
+														"type": "integer"
+													},
+													"misc_tackles": {
+														"type": "integer"
+													},
+													"misc_assists": {
+														"type": "integer"
+													},
+													"misc_forced_fumbles": {
+														"type": "integer"
+													},
+													"misc_fumble_recoveries": {
+														"type": "integer"
+													}
+												}
+											}
+										}
+									}
+								},
+								"extra_points": {
+									"type": "object",
+									"properties": {
+										"kicks": {
+											"type": "object",
+											"properties": {
+												"totals": {
+													"type": "object",
+													"properties": {
+														"attempts": {
+															"type": "integer"
+														},
+														"blocked": {
+															"type": "integer"
+														},
+														"made": {
+															"type": "integer"
+														},
+														"pct": {
+															"type": "integer"
+														}
+													}
+												},
+												"players": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"name": {
+																"type": "string"
+															},
+															"jersey": {
+																"type": "string"
+															},
+															"position": {
+																"type": "string"
+															},
+															"attempts": {
+																"type": "integer"
+															},
+															"blocked": {
+																"type": "integer"
+															},
+															"made": {
+																"type": "integer"
+															},
+															"pct": {
+																"type": "integer"
+															}
+														}
+													}
+												}
+											}
+										},
+										"conversions": {
+											"type": "object",
+											"properties": {
+												"totals": {
+													"type": "object",
+													"properties": {
+														"pass_attempts": {
+															"type": "integer"
+														},
+														"pass_successes": {
+															"type": "integer"
+														},
+														"rush_attempts": {
+															"type": "integer"
+														},
+														"rush_successes": {
+															"type": "integer"
+														},
+														"defense_attempts": {
+															"type": "integer"
+														},
+														"defense_successes": {
+															"type": "integer"
+														},
+														"turnover_successes": {
+															"type": "integer"
+														}
+													}
+												},
+												"players": {
+													"type": "array"
+												}
+											}
+										}
+									}
+								},
+								"first_downs": {
+									"type": "object",
+									"properties": {
+										"pass": {
+											"type": "integer"
+										},
+										"penalty": {
+											"type": "integer"
+										},
+										"rush": {
+											"type": "integer"
+										},
+										"total": {
+											"type": "integer"
+										}
+									}
+								},
+								"interceptions": {
+									"type": "object",
+									"properties": {
+										"return_yards": {
+											"type": "integer"
+										},
+										"returned": {
+											"type": "integer"
+										},
+										"number": {
+											"type": "integer"
+										}
+									}
+								},
+								"touchdowns": {
+									"type": "object",
+									"properties": {
+										"pass": {
+											"type": "integer"
+										},
+										"rush": {
+											"type": "integer"
+										},
+										"total_return": {
+											"type": "integer"
+										},
+										"total": {
+											"type": "integer"
+										},
+										"fumble_return": {
+											"type": "integer"
+										},
+										"int_return": {
+											"type": "integer"
+										},
+										"kick_return": {
+											"type": "integer"
+										},
+										"punt_return": {
+											"type": "integer"
+										},
+										"other": {
+											"type": "integer"
+										}
+									}
+								},
+								"efficiency": {
+									"type": "object",
+									"properties": {
+										"goaltogo": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"successes": {
+													"type": "integer"
+												},
+												"pct": {
+													"type": "number"
+												}
+											}
+										},
+										"redzone": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"successes": {
+													"type": "integer"
+												},
+												"pct": {
+													"type": "number"
+												}
+											}
+										},
+										"thirddown": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"successes": {
+													"type": "integer"
+												},
+												"pct": {
+													"type": "number"
+												}
+											}
+										},
+										"fourthdown": {
+											"type": "object",
+											"properties": {
+												"attempts": {
+													"type": "integer"
+												},
+												"successes": {
+													"type": "integer"
+												},
+												"pct": {
+													"type": "integer"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"_comment": {
+					"type": "string"
+				}
+			}
+		},
+		"typeProperties": {
+			"collectionName": "game_statistics"
+		}
+	}
+}
