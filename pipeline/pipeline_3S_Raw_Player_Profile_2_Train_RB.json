@@ -40,7 +40,7 @@
 				]
 			},
 			{
-				"name": "Data flow1",
+				"name": "GameStatistics",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -52,6 +52,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "gameStatisticSource",
+						"type": "DataFlowReference"
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
