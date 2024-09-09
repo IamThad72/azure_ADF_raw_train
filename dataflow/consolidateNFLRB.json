@@ -27,7 +27,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "join1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          status as string,",
@@ -69,8 +73,13 @@
 				"          birth_place as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     format: 'document') ~> PlayerProfileSource"
+				"     validateSchema: true,",
+				"     format: 'document') ~> PlayerProfileSource",
+				"GameStatisticSource, PlayerProfileSource join(statistics.home.rushing.playersstatistics.home.rushing.players.idstatistics == name,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1"
 			]
 		}
 	}
