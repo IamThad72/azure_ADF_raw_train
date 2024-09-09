@@ -29,7 +29,6 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     limit: 5,",
 				"     format: 'document') ~> gameStatistics"
 			]
 		}
