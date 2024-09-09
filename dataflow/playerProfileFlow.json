@@ -1,0 +1,41 @@
+{
+	"name": "playerProfileFlow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dataset_3S_NFL_Raw_Player_Profile",
+						"type": "DatasetReference"
+					},
+					"name": "playerProfileSource"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          name as string,",
+				"          jersey as string,",
+				"          last_name as string,",
+				"          first_name as string,",
+				"          abbr_name as string,",
+				"          birth_date as string,",
+				"          weight as integer,",
+				"          height as integer,",
+				"          position as string,",
+				"          college as string,",
+				"          status as string,",
+				"          seasons as (id as string, year as integer, type as string, name as string, teams as (id as string, name as string, market as string, alias as string, sr_id as string, statistics as (games_played as integer, games_started as integer, rushing as (avg_yards as double, attempts as integer, touchdowns as integer, yards as integer, longest as integer, longest_touchdown as integer, redzone_attempts as integer, tlost as integer, tlost_yards as integer, first_downs as integer, broken_tackles as integer, kneel_downs as integer, scrambles as integer, yards_after_contact as integer), receiving as (receptions as integer, targets as integer, yards as integer, avg_yards as integer, longest as integer, touchdowns as integer, longest_touchdown as integer, yards_after_catch as integer, redzone_targets as integer, air_yards as integer, first_downs as integer, broken_tackles as integer, dropped_passes as integer, catchable_passes as integer, yards_after_contact as integer), penalties as (penalties as integer, yards as integer, first_downs as integer), kick_returns as (returns as integer, yards as integer, avg_yards as double, touchdowns as integer, longest as integer, faircatches as integer, longest_touchdown as integer), fumbles as (fumbles as integer, lost_fumbles as integer, own_rec as integer, own_rec_yards as integer, opp_rec as integer, opp_rec_yards as integer, out_of_bounds as integer, forced_fumbles as integer, own_rec_tds as integer, opp_rec_tds as integer, ez_rec_tds as integer), defense as (tackles as integer, assists as integer, combined as integer, sacks as integer, sack_yards as integer, interceptions as integer, passes_defended as integer, forced_fumbles as integer, fumble_recoveries as integer, qb_hits as integer, tloss as integer, tloss_yards as integer, safeties as integer, sp_tackles as integer, sp_assists as integer, sp_forced_fumbles as integer, sp_fumble_recoveries as integer, sp_blocks as integer, misc_tackles as integer, misc_assists as integer, misc_forced_fumbles as integer, misc_fumble_recoveries as integer, def_targets as integer, def_comps as integer, blitzes as integer, hurries as integer, knockdowns as integer, missed_tackles as integer, batted_passes as integer)))[])[],",
+				"          {_comment} as string,",
+				"          birth_place as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 10,",
+				"     format: 'document') ~> playerProfileSource"
+			]
+		}
+	}
+}
