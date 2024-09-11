@@ -26,6 +26,9 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "lookup1"
 				}
 			],
 			"scriptLines": [
@@ -72,7 +75,11 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeRB",
-				"source2 derive(rbID = id) ~> derivedColumn1"
+				"source2 derive(rbID = id) ~> derivedColumn1",
+				"flattenHomeRB, derivedColumn1 lookup(PLAYER_ID == id,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1"
 			]
 		}
 	}
