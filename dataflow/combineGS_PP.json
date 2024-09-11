@@ -19,7 +19,15 @@
 					"name": "source2"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dataset_3S_NFL_Train_Player_Profile_RB",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "homeRushID"
@@ -72,7 +80,7 @@
 				"     limit: 100,",
 				"     format: 'document',",
 				"     systemColumns: true) ~> source2",
-				"flattenHomeRB derive() ~> homeRushID",
+				"derivedColumn1 derive(rbID = id) ~> homeRushID",
 				"source1 foldDown(unroll(statistics.home.rushing.players),",
 				"     mapColumn(",
 				"          status,",
@@ -83,7 +91,6 @@
 				"          clock,",
 				"          quarter,",
 				"          summary,",
-				"          statistics,",
 				"          {_comment}",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
@@ -92,7 +99,16 @@
 				"homeRushID, derivedColumn1 lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup1"
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'document',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
