@@ -96,7 +96,7 @@
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeRB",
 				"source2 derive(rbID = id) ~> derivedColumn1",
-				"homeRushID, derivedColumn1 lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"homeRushID, derivedColumn1 lookup(homeRushID@rbID == derivedColumn1@rbID,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup1",
