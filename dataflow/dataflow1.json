@@ -16,6 +16,9 @@
 			"transformations": [
 				{
 					"name": "select1"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -36,12 +39,13 @@
 				"     limit: 1,",
 				"     format: 'document',",
 				"     systemColumns: false) ~> source1",
-				"source1 select(mapColumn(",
+				"filter1 select(mapColumn(",
 				"          players = statistics.home.rushing.players[1].id,",
-				"          position = {statistics.home.rushing.players[1].position}",
+				"          position = statistics.home.rushing.players[1].position",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"source1 filter(and(statistics.home.rushing.players.position == 'RB', statistics.away.rushing.players.position == 'RB')) ~> filter1"
 			]
 		}
 	}
