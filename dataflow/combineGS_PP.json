@@ -46,7 +46,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     limit: 5,",
+				"     limit: 2,",
 				"     format: 'document') ~> source1",
 				"source(output(",
 				"          name as string,",
