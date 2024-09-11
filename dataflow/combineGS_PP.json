@@ -33,9 +33,6 @@
 				},
 				{
 					"name": "lookup1"
-				},
-				{
-					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -83,7 +80,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'document') ~> source3",
-				"select1 foldDown(unroll(statistics.home.rushing.players),",
+				"source1 foldDown(unroll(statistics.home.rushing.players),",
 				"     mapColumn(",
 				"          player_id = statistics.home.rushing.players.id",
 				"     ),",
@@ -92,14 +89,7 @@
 				"flattenHomeRB, source2 lookup(player_id == id,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup1",
-				"source1 select(mapColumn(",
-				"          position = statistics.home.rushing.players[1].position,",
-				"          scheduled,",
-				"          attempts = statistics.home.rushing.players[1].attempts",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     broadcast: 'auto')~> lookup1"
 			]
 		}
 	}
