@@ -37,7 +37,9 @@
 				"     format: 'document',",
 				"     systemColumns: false) ~> source1",
 				"source1 select(mapColumn(",
-				"          players = statistics.home.rushing.players[1].id",
+				"          players = statistics.home.rushing.players[1].id,",
+				"          each(match(statistics.home.rushing.players[1].position == 'RB'),",
+				"               position = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1"
