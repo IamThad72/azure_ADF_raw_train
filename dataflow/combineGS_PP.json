@@ -16,6 +16,9 @@
 			"transformations": [
 				{
 					"name": "homeRushID"
+				},
+				{
+					"name": "flattenHomeRB"
 				}
 			],
 			"scriptLines": [
@@ -35,7 +38,22 @@
 				"     validateSchema: false,",
 				"     limit: 5,",
 				"     format: 'document') ~> source1",
-				"source1 derive() ~> homeRushID"
+				"flattenHomeRB derive() ~> homeRushID",
+				"source1 foldDown(unroll(statistics.home.rushing.players),",
+				"     mapColumn(",
+				"          status,",
+				"          scheduled,",
+				"          attendance,",
+				"          utc_offset,",
+				"          entry_mode,",
+				"          clock,",
+				"          quarter,",
+				"          summary,",
+				"          statistics,",
+				"          {_comment}",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flattenHomeRB"
 			]
 		}
 	}
