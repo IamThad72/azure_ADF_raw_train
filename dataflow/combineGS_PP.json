@@ -15,7 +15,7 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "derivedColumn2"
+					"name": "homeRushID"
 				}
 			],
 			"scriptLines": [
@@ -35,7 +35,7 @@
 				"     validateSchema: false,",
 				"     limit: 5,",
 				"     format: 'document') ~> source1",
-				"source1 derive() ~> derivedColumn2"
+				"source1 derive() ~> homeRushID"
 			]
 		}
 	}
