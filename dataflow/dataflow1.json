@@ -29,7 +29,9 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'document') ~> source1"
+				"     limit: 1,",
+				"     format: 'document',",
+				"     systemColumns: true) ~> source1"
 			]
 		}
 	}
