@@ -25,9 +25,6 @@
 					"name": "flattenHomeRB"
 				},
 				{
-					"name": "derivedColumn1"
-				},
-				{
 					"name": "lookup1"
 				}
 			],
@@ -75,7 +72,6 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeRB",
-				"source2 derive(rbID = id) ~> derivedColumn1",
 				"flattenHomeRB, source2 lookup(PLAYER_ID == id,",
 				"     multiple: false,",
 				"     pickup: 'any',",
