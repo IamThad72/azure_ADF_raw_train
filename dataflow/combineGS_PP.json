@@ -28,6 +28,9 @@
 					"name": "flattenHomeRB"
 				},
 				{
+					"name": "derivedColumn1"
+				},
+				{
 					"name": "lookup1"
 				}
 			],
@@ -66,6 +69,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     limit: 100,",
 				"     format: 'document',",
 				"     systemColumns: true) ~> source2",
 				"flattenHomeRB derive() ~> homeRushID",
@@ -84,7 +88,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeRB",
-				"homeRushID, source2 lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"source2 derive(rbID = id) ~> derivedColumn1",
+				"homeRushID, derivedColumn1 lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup1"
