@@ -107,7 +107,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectHomeRushing",
-				"selectHomeReceiving select(mapColumn(",
+				"selectGameStatistics select(mapColumn(",
 				"          awayRushing = statistics.away.rushing",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
