@@ -27,9 +27,6 @@
 					"name": "filterAwayRB"
 				},
 				{
-					"name": "filter3"
-				},
-				{
 					"name": "derivedAwayRB"
 				},
 				{
@@ -46,6 +43,9 @@
 				},
 				{
 					"name": "selectHomeReceiving"
+				},
+				{
+					"name": "filterHomeRB"
 				}
 			],
 			"scriptLines": [
@@ -85,21 +85,20 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenAwayStats",
-				"selectHomeRushing foldDown(unroll(statistics.away.rushing.players),",
+				"selectHomeRushing foldDown(unroll(rushingStats),",
 				"     mapColumn(",
-				"          player_id = awayRushing.id,",
-				"          position = awayRushing.position,",
-				"          avg_yards = awayRushing.avg_yards,",
-				"          attempts = {awayRushing..attempts},",
-				"          yards = {awayRushing..yards},",
-				"          longest = {awayRushing..longest},",
-				"          longest_touchdown = {awayRushing..longest_touchdown},",
-				"          touchdowns = {awayRushing..touchdowns}",
+				"          player_id = rushingStats.id,",
+				"          position = rushingStats.position,",
+				"          avg_yards = rushingStats.avg_yards,",
+				"          attempts = rushingStats.attempts,",
+				"          yards = rushingStats.yards,",
+				"          longest = rushingStats.longest,",
+				"          longest_touchdown = rushingStats.longest_touchdown,",
+				"          touchdowns = rushingStats.touchdowns",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenhomeStats",
-				"derivedAwayRB filter(ERROR_FUNCTION('')) ~> filterAwayRB",
-				"derivedHomeRB filter(position == 'RB') ~> filter3",
+				"derivedAwayRB filter(position == 'RB') ~> filterAwayRB",
 				"flattenAwayStats derive(side = \"away\") ~> derivedAwayRB",
 				"flattenhomeStats derive(side = \"home\") ~> derivedHomeRB",
 				"selectGameStatistics select(mapColumn(",
@@ -121,7 +120,8 @@
 				"          homeReceiving = statistics.home.receiving.players",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectHomeReceiving"
+				"     skipDuplicateMapOutputs: true) ~> selectHomeReceiving",
+				"derivedHomeRB filter(ERROR_FUNCTION('')) ~> filterHomeRB"
 			]
 		}
 	}
