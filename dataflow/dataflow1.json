@@ -43,6 +43,9 @@
 				},
 				{
 					"name": "selectScheduleDate"
+				},
+				{
+					"name": "selectHomeReceiving"
 				}
 			],
 			"scriptLines": [
@@ -104,7 +107,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectHomeRushing",
-				"selectGameStatistics select(mapColumn(",
+				"selectHomeReceiving select(mapColumn(",
 				"          awayRushing = statistics.away.rushing",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
@@ -113,7 +116,12 @@
 				"          scheduled",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectScheduleDate"
+				"     skipDuplicateMapOutputs: true) ~> selectScheduleDate",
+				"selectGameStatistics select(mapColumn(",
+				"          homeReceiving = statistics.home.receiving.players",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectHomeReceiving"
 			]
 		}
 	}
