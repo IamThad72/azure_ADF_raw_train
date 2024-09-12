@@ -13,7 +13,23 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "flatten1"
+				},
+				{
+					"name": "flatten2"
+				},
+				{
+					"name": "filter2"
+				},
+				{
+					"name": "filter3"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          status as string,",
@@ -31,7 +47,39 @@
 				"     validateSchema: false,",
 				"     limit: 1,",
 				"     format: 'document',",
-				"     systemColumns: false) ~> source1"
+				"     systemColumns: false) ~> source1",
+				"source1 select(mapColumn(",
+				"          statistics,",
+				"          scheduled",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 foldDown(unroll(statistics.home.rushing.players),",
+				"     mapColumn(",
+				"          player_id = statistics.home.rushing.players.id,",
+				"          position = statistics.home.rushing.players.position,",
+				"          avg_yards = statistics.home.rushing.players.avg_yards,",
+				"          attempts = statistics.home.rushing.players.attempts,",
+				"          yards = statistics.home.rushing.players.yards,",
+				"          longest = statistics.home.rushing.players.longest,",
+				"          longest_touchdown = statistics.home.rushing.players.longest_touchdown",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"select1 foldDown(unroll(statistics.away.rushing.players),",
+				"     mapColumn(",
+				"          player_id = statistics.away.rushing.players.id,",
+				"          position = statistics.away.rushing.players.position,",
+				"          avg_yards = statistics.away.rushing.players.avg_yards,",
+				"          attempts = statistics.away.rushing.players.attempts,",
+				"          yards = statistics.away.rushing.players.yards,",
+				"          longest = statistics.away.rushing.players.longest,",
+				"          longest_touchdown = statistics.away.rushing.players.longest_touchdown",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten2",
+				"flatten1 filter(ERROR_FUNCTION('')) ~> filter2",
+				"flatten2 filter(position == 'RB') ~> filter3"
 			]
 		}
 	}
