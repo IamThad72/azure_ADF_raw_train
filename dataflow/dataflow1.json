@@ -90,6 +90,12 @@
 				},
 				{
 					"name": "flatten1"
+				},
+				{
+					"name": "flatten2"
+				},
+				{
+					"name": "flatten3"
 				}
 			],
 			"scriptLines": [
@@ -243,12 +249,30 @@
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceiving",
 				"flattenHomeReceiving derive(side = \"away\") ~> derivedAwayReceivingRB",
 				"derivedAwayReceivingRB filter(position == 'RB') ~> filterAwayRecRB",
-				"sourceLeagueHierarchy foldDown(unroll(conferences, (conferences[2].divisions.teams)),",
+				"sourceLeagueHierarchy foldDown(unroll(conferences, conferences),",
 				"     mapColumn(",
-				"          league",
+				"          conferences = conferences",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten1"
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 foldDown(unroll(conferences.divisions),",
+				"     mapColumn(",
+				"          teams = conferences.divisions.teams",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten2",
+				"flatten2 foldDown(unroll(teams),",
+				"     mapColumn(",
+				"          team_id = teams.id,",
+				"          team_name = teams.name,",
+				"          lat = teams.venue.location.lat,",
+				"          lng = teams.venue.location.lng,",
+				"          surface = teams.venue.surface,",
+				"          venue_id = teams.venue.id,",
+				"          roof_type = teams.venue.roof_type",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten3"
 			]
 		}
 	}
