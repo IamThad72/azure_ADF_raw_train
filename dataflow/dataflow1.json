@@ -89,7 +89,7 @@
 					"name": "filterAwayRecRB"
 				},
 				{
-					"name": "selectDivisions"
+					"name": "selectD"
 				},
 				{
 					"name": "select1"
@@ -250,9 +250,9 @@
 				"          divisions = conferences[1].divisions",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectDivisions",
-				"selectDivisions select(mapColumn(",
-				"          conferences = divisions",
+				"     skipDuplicateMapOutputs: true) ~> selectD",
+				"sourceLeagueHierarchy select(mapColumn(",
+				"          id = {conferences[2].divisions}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1"
