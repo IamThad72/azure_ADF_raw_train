@@ -15,7 +15,7 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "select1"
+					"name": "selectGS"
 				},
 				{
 					"name": "flatten1"
@@ -53,8 +53,8 @@
 				"          scheduled",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 foldDown(unroll(statistics.home.rushing.players),",
+				"     skipDuplicateMapOutputs: true) ~> selectGS",
+				"selectGS foldDown(unroll(statistics.home.rushing.players),",
 				"     mapColumn(",
 				"          player_id = statistics.home.rushing.players.id,",
 				"          position = statistics.home.rushing.players.position,",
@@ -62,11 +62,12 @@
 				"          attempts = statistics.home.rushing.players.attempts,",
 				"          yards = statistics.home.rushing.players.yards,",
 				"          longest = statistics.home.rushing.players.longest,",
-				"          longest_touchdown = statistics.home.rushing.players.longest_touchdown",
+				"          longest_touchdown = statistics.home.rushing.players.longest_touchdown,",
+				"          touchdowns = statistics.home.rushing.players.touchdowns",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flatten1",
-				"select1 foldDown(unroll(statistics.away.rushing.players),",
+				"selectGS foldDown(unroll(statistics.away.rushing.players),",
 				"     mapColumn(",
 				"          player_id = statistics.away.rushing.players.id,",
 				"          position = statistics.away.rushing.players.position,",
