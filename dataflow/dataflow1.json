@@ -71,13 +71,10 @@
 					"name": "filterHomeRecRB"
 				},
 				{
-					"name": "selectAllRBs"
+					"name": "selectAllPlayers"
 				},
 				{
-					"name": "filter1"
-				},
-				{
-					"name": "selectDivsions"
+					"name": "filterRBs"
 				},
 				{
 					"name": "selectAwayReceivingRB"
@@ -92,10 +89,10 @@
 					"name": "filterAwayRecRB"
 				},
 				{
-					"name": "flattenAFCTeams"
+					"name": "selectDivisions"
 				},
 				{
-					"name": "selectAFC"
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -226,13 +223,8 @@
 				"          birth_place",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectAllRBs",
-				"selectAllRBs filter(position == 'RB') ~> filter1",
-				"sourceLeagueHierarchy select(mapColumn(",
-				"          afc = conferences[1].divisions",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectDivsions",
+				"     skipDuplicateMapOutputs: true) ~> selectAllPlayers",
+				"selectAllPlayers filter(position == 'RB') ~> filterRBs",
 				"selectGameStatistics select(mapColumn(",
 				"          awayReceiving = statistics.away.receiving.players",
 				"     ),",
@@ -254,22 +246,16 @@
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceiving",
 				"flattenHomeReceiving derive(side = \"away\") ~> derivedAwayReceivingRB",
 				"derivedAwayReceivingRB filter(position == 'RB') ~> filterAwayRecRB",
-				"selectAFC foldDown(unroll(afc.teams, afc.teams),",
-				"     mapColumn(",
-				"          team_id = afc.teams.id,",
-				"          team_name = afc.teams.name,",
-				"          lat = afc.teams.venue.location.lat,",
-				"          lng = afc.teams.venue.location.lng,",
-				"          surface = afc.teams.venue.surface,",
-				"          roof_type = afc.teams.venue.roof_type",
-				"     ),",
-				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flattenAFCTeams",
-				"selectDivsions select(mapColumn(",
-				"          afc = afc",
+				"sourceLeagueHierarchy select(mapColumn(",
+				"          divisions = conferences[1].divisions",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectAFC"
+				"     skipDuplicateMapOutputs: true) ~> selectDivisions",
+				"selectDivisions select(mapColumn(",
+				"          conferences = divisions",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}
