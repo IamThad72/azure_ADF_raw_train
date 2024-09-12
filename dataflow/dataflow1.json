@@ -78,6 +78,9 @@
 				},
 				{
 					"name": "select2"
+				},
+				{
+					"name": "selectAwayReceivingRB"
 				}
 			],
 			"scriptLines": [
@@ -130,12 +133,13 @@
 				"sourceGameStatistics select(mapColumn(",
 				"          schedule = scheduled,",
 				"          venue_id = summary.venue.id,",
-				"          statistics = statistics",
+				"          statistics",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectGameStatistics",
 				"selectAwayRushing foldDown(unroll(awayRushing),",
 				"     mapColumn(",
+				"          player_id = awayRushing.id,",
 				"          position = awayRushing.position,",
 				"          avg_yards = awayRushing.avg_yards,",
 				"          yards = awayRushing.yards,",
@@ -173,12 +177,11 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectAwayRushing",
 				"selectGameStatistics select(mapColumn(",
-				"          venue_id,",
-				"          schedule",
+				"          venue_id = statistics.away.receiving.players",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectScheduleDateVenue",
-				"selectGameStatistics select(mapColumn(",
+				"selectAwayReceivingRB select(mapColumn(",
 				"          homeReceiving = statistics.home.receiving.players",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
@@ -200,12 +203,12 @@
 				"flattenHomeReceivingRB derive(side = \"home\") ~> derivedHomeRec",
 				"derivedHomeRec filter(position == 'RB') ~> filterHomeRecRB",
 				"sourcePlayerProfile select(mapColumn(",
+				"          player_id = id,",
 				"          birth_date,",
 				"          weight,",
 				"          height,",
 				"          position,",
-				"          birth_place,",
-				"          player_id = id",
+				"          birth_place",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
@@ -214,7 +217,14 @@
 				"          divisions = conferences[1].divisions",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2"
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"selectGameStatistics select(mapColumn(",
+				"          schedule,",
+				"          venue_id,",
+				"          statistics",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectAwayReceivingRB"
 			]
 		}
 	}
