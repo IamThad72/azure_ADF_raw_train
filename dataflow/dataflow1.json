@@ -77,7 +77,7 @@
 					"name": "filter1"
 				},
 				{
-					"name": "selectAFC"
+					"name": "selectDivsions"
 				},
 				{
 					"name": "selectAwayReceivingRB"
@@ -93,6 +93,9 @@
 				},
 				{
 					"name": "flattenAFCTeams"
+				},
+				{
+					"name": "selectAFC"
 				}
 			],
 			"scriptLines": [
@@ -229,7 +232,7 @@
 				"          afc = conferences[1].divisions",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectAFC",
+				"     skipDuplicateMapOutputs: true) ~> selectDivsions",
 				"selectGameStatistics select(mapColumn(",
 				"          awayReceiving = statistics.away.receiving.players",
 				"     ),",
@@ -261,7 +264,12 @@
 				"          roof_type = afc.teams.venue.roof_type",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flattenAFCTeams"
+				"     skipDuplicateMapOutputs: false) ~> flattenAFCTeams",
+				"selectDivsions select(mapColumn(",
+				"          afc = afc",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectAFC"
 			]
 		}
 	}
