@@ -18,19 +18,19 @@
 					"name": "selectGameStatistics"
 				},
 				{
-					"name": "flattenAwayStats"
+					"name": "flattenAwayRushingRB"
 				},
 				{
-					"name": "flattenhomeStats"
+					"name": "flattenHomeRushingRB"
 				},
 				{
 					"name": "filterAwayRB"
 				},
 				{
-					"name": "derivedAwayRB"
+					"name": "derivedAwayRush"
 				},
 				{
-					"name": "derivedHomeRB"
+					"name": "derivedHomeRush"
 				},
 				{
 					"name": "selectHomeRushing"
@@ -46,6 +46,12 @@
 				},
 				{
 					"name": "filterHomeRB"
+				},
+				{
+					"name": "flattenHomeReceivingRB"
+				},
+				{
+					"name": "derivedHomeRec"
 				}
 			],
 			"scriptLines": [
@@ -84,7 +90,7 @@
 				"          attempts = awayRushing.attempts",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flattenAwayStats",
+				"     skipDuplicateMapOutputs: false) ~> flattenAwayRushingRB",
 				"selectHomeRushing foldDown(unroll(rushingStats),",
 				"     mapColumn(",
 				"          player_id = rushingStats.id,",
@@ -97,10 +103,10 @@
 				"          touchdowns = rushingStats.touchdowns",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flattenhomeStats",
-				"derivedAwayRB filter(position == 'RB') ~> filterAwayRB",
-				"flattenAwayStats derive(side = \"away\") ~> derivedAwayRB",
-				"flattenhomeStats derive(side = \"home\") ~> derivedHomeRB",
+				"     skipDuplicateMapOutputs: false) ~> flattenHomeRushingRB",
+				"derivedAwayRush filter(position == 'RB') ~> filterAwayRB",
+				"flattenAwayRushingRB derive(side = \"away\") ~> derivedAwayRush",
+				"flattenHomeRushingRB derive(side = \"home\") ~> derivedHomeRush",
 				"selectGameStatistics select(mapColumn(",
 				"          rushingStats = statistics.home.rushing.players",
 				"     ),",
@@ -121,7 +127,21 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectHomeReceiving",
-				"derivedHomeRB filter(position == 'RB') ~> filterHomeRB"
+				"derivedHomeRush filter(position == 'RB') ~> filterHomeRB",
+				"selectHomeReceiving foldDown(unroll(homeReceiving),",
+				"     mapColumn(",
+				"          player_id = homeReceiving.id,",
+				"          position = homeReceiving.position,",
+				"          targets = homeReceiving.targets,",
+				"          yards = homeReceiving.yards,",
+				"          avg_yards = homeReceiving.avg_yards,",
+				"          touchdowns = homeReceiving.touchdowns,",
+				"          longest_touchdown = homeReceiving.longest_touchdown,",
+				"          yards_after_catch = homeReceiving.yards_after_catch",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceivingRB",
+				"flattenHomeReceivingRB derive(side = \"home\") ~> derivedHomeRec"
 			]
 		}
 	}
