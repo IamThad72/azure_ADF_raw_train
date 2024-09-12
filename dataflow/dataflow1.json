@@ -99,7 +99,7 @@
 				"derivedHomeRB filter(position == 'RB') ~> filter3",
 				"flattenAwayStats derive(side = \"away\") ~> derivedAwayRB",
 				"flattenhomeStats derive(side = \"home\") ~> derivedHomeRB",
-				"selectScheduleDate select(mapColumn(",
+				"selectGameStatistics select(mapColumn(",
 				"          rushingStats = statistics.home.rushing",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
