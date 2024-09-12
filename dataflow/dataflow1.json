@@ -53,7 +53,7 @@
 					"name": "selectAwayRushing"
 				},
 				{
-					"name": "selectScheduleDate"
+					"name": "selectScheduleDateVenue"
 				},
 				{
 					"name": "selectHomeReceiving"
@@ -136,15 +136,13 @@
 				"     skipDuplicateMapOutputs: true) ~> selectGameStatistics",
 				"selectAwayRushing foldDown(unroll(awayRushing),",
 				"     mapColumn(",
-				"          player_id = awayRushing,",
 				"          position = awayRushing.position,",
 				"          avg_yards = awayRushing.avg_yards,",
 				"          yards = awayRushing.yards,",
 				"          longest = awayRushing.longest,",
 				"          longest_touchdown = awayRushing.longest_touchdown,",
 				"          touchdowns = awayRushing.longest_touchdown,",
-				"          attempts = awayRushing.attempts,",
-				"          awayRushing",
+				"          attempts = awayRushing.attempts",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenAwayRushingRB",
@@ -179,7 +177,7 @@
 				"          schedule",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectScheduleDate",
+				"     skipDuplicateMapOutputs: true) ~> selectScheduleDateVenue",
 				"selectGameStatistics select(mapColumn(",
 				"          homeReceiving = statistics.home.receiving.players",
 				"     ),",
