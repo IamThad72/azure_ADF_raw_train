@@ -15,7 +15,7 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "selectGS"
+					"name": "selectGameStatistics"
 				},
 				{
 					"name": "flattenAwayStats"
@@ -37,6 +37,12 @@
 				},
 				{
 					"name": "selectHomeRushing"
+				},
+				{
+					"name": "selectAawayRushing"
+				},
+				{
+					"name": "selectScheduleDate"
 				}
 			],
 			"scriptLines": [
@@ -62,7 +68,7 @@
 				"          scheduled",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectGS",
+				"     skipDuplicateMapOutputs: true) ~> selectGameStatistics",
 				"selectHomeRushing foldDown(unroll(statistics.home.rushing.players),",
 				"     mapColumn(",
 				"          player_id = statistics.home.rushing.players.id,",
@@ -76,7 +82,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenAwayStats",
-				"selectGS foldDown(unroll(statistics.away.rushing.players),",
+				"selectAawayRushing foldDown(unroll(statistics.away.rushing.players),",
 				"     mapColumn(",
 				"          player_id = statistics.away.rushing.players.id,",
 				"          position = statistics.away.rushing.players.position,",
@@ -93,11 +99,21 @@
 				"derivedHomeRB filter(position == 'RB') ~> filter3",
 				"flattenAwayStats derive(side = \"away\") ~> derivedAwayRB",
 				"flattenhomeStats derive(side = \"home\") ~> derivedHomeRB",
-				"selectGS select(mapColumn(",
+				"selectScheduleDate select(mapColumn(",
 				"          rushingStats = statistics.home.rushing",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectHomeRushing"
+				"     skipDuplicateMapOutputs: true) ~> selectHomeRushing",
+				"selectGameStatistics select(mapColumn(",
+				"          awayRushing = statistics.away.rushing",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectAawayRushing",
+				"selectGameStatistics select(mapColumn(",
+				"          scheduled",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectScheduleDate"
 			]
 		}
 	}
