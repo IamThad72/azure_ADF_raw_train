@@ -24,7 +24,7 @@
 					"name": "flattenHomeRushingRB"
 				},
 				{
-					"name": "filterAwayRB"
+					"name": "filterAwayRushRB"
 				},
 				{
 					"name": "derivedAwayRush"
@@ -45,13 +45,19 @@
 					"name": "selectHomeReceiving"
 				},
 				{
-					"name": "filterHomeRB"
+					"name": "filterHomeRushRB"
 				},
 				{
 					"name": "flattenHomeReceivingRB"
 				},
 				{
 					"name": "derivedHomeRec"
+				},
+				{
+					"name": "filterHomeRecRB"
+				},
+				{
+					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -104,7 +110,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeRushingRB",
-				"derivedAwayRush filter(position == 'RB') ~> filterAwayRB",
+				"derivedAwayRush filter(position == 'RB') ~> filterAwayRushRB",
 				"flattenAwayRushingRB derive(side = \"away\") ~> derivedAwayRush",
 				"flattenHomeRushingRB derive(side = \"home\") ~> derivedHomeRush",
 				"selectGameStatistics select(mapColumn(",
@@ -127,7 +133,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectHomeReceiving",
-				"derivedHomeRush filter(position == 'RB') ~> filterHomeRB",
+				"derivedHomeRush filter(position == 'RB') ~> filterHomeRushRB",
 				"selectHomeReceiving foldDown(unroll(homeReceiving),",
 				"     mapColumn(",
 				"          player_id = homeReceiving.id,",
@@ -141,7 +147,13 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceivingRB",
-				"flattenHomeReceivingRB derive(side = \"home\") ~> derivedHomeRec"
+				"flattenHomeReceivingRB derive(side = \"home\") ~> derivedHomeRec",
+				"derivedHomeRec filter(position == 'RB') ~> filterHomeRecRB",
+				"filterHomeRecRB, filterAwayRushRB join(flattenHomeReceivingRB@player_id == flattenAwayRushingRB@player_id,",
+				"     joinType:'outer',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1"
 			]
 		}
 	}
