@@ -13,11 +13,7 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [
-				{
-					"name": "filter1"
-				}
-			],
+			"transformations": [],
 			"scriptLines": [
 				"source(output(",
 				"          status as string,",
@@ -35,8 +31,7 @@
 				"     validateSchema: false,",
 				"     limit: 1,",
 				"     format: 'document',",
-				"     systemColumns: false) ~> source1",
-				"source1 filter(clock == 4) ~> filter1"
+				"     systemColumns: false) ~> source1"
 			]
 		}
 	}
