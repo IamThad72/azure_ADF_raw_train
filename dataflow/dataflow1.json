@@ -18,16 +18,25 @@
 					"name": "selectGS"
 				},
 				{
-					"name": "flatten1"
+					"name": "flattenAwayStats"
 				},
 				{
-					"name": "flatten2"
+					"name": "flattenhomeStats"
 				},
 				{
-					"name": "filter2"
+					"name": "filterAwayRB"
 				},
 				{
 					"name": "filter3"
+				},
+				{
+					"name": "derivedAwayRB"
+				},
+				{
+					"name": "derivedHomeRB"
+				},
+				{
+					"name": "selectHomeRushing"
 				}
 			],
 			"scriptLines": [
@@ -54,7 +63,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectGS",
-				"selectGS foldDown(unroll(statistics.home.rushing.players),",
+				"selectHomeRushing foldDown(unroll(statistics.home.rushing.players),",
 				"     mapColumn(",
 				"          player_id = statistics.home.rushing.players.id,",
 				"          position = statistics.home.rushing.players.position,",
@@ -66,7 +75,7 @@
 				"          touchdowns = statistics.home.rushing.players.touchdowns",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"     skipDuplicateMapOutputs: false) ~> flattenAwayStats",
 				"selectGS foldDown(unroll(statistics.away.rushing.players),",
 				"     mapColumn(",
 				"          player_id = statistics.away.rushing.players.id,",
@@ -79,9 +88,16 @@
 				"          touchdowns = statistics.away.rushing.totals.touchdowns",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten2",
-				"flatten1 filter(ERROR_FUNCTION('')) ~> filter2",
-				"flatten2 filter(position == 'RB') ~> filter3"
+				"     skipDuplicateMapOutputs: false) ~> flattenhomeStats",
+				"derivedAwayRB filter(ERROR_FUNCTION('')) ~> filterAwayRB",
+				"derivedHomeRB filter(position == 'RB') ~> filter3",
+				"flattenAwayStats derive(side = \"away\") ~> derivedAwayRB",
+				"flattenhomeStats derive(side = \"home\") ~> derivedHomeRB",
+				"selectGS select(mapColumn(",
+				"          rushingStats = statistics.home.rushing",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectHomeRushing"
 			]
 		}
 	}
