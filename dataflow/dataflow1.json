@@ -89,10 +89,7 @@
 					"name": "filterAwayRecRB"
 				},
 				{
-					"name": "selectD"
-				},
-				{
-					"name": "select1"
+					"name": "flatten1"
 				}
 			],
 			"scriptLines": [
@@ -246,16 +243,12 @@
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceiving",
 				"flattenHomeReceiving derive(side = \"away\") ~> derivedAwayReceivingRB",
 				"derivedAwayReceivingRB filter(position == 'RB') ~> filterAwayRecRB",
-				"sourceLeagueHierarchy select(mapColumn(",
-				"          divisions = conferences[1].divisions",
+				"sourceLeagueHierarchy foldDown(unroll(conferences, (conferences[2].divisions.teams)),",
+				"     mapColumn(",
+				"          league",
 				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectD",
-				"sourceLeagueHierarchy select(mapColumn(",
-				"          id = {conferences[2].divisions}",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1"
 			]
 		}
 	}
