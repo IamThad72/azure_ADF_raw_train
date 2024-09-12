@@ -77,7 +77,7 @@
 					"name": "filter1"
 				},
 				{
-					"name": "select2"
+					"name": "selectAFC"
 				},
 				{
 					"name": "selectAwayReceivingRB"
@@ -92,7 +92,7 @@
 					"name": "filterAwayRecRB"
 				},
 				{
-					"name": "flatten1"
+					"name": "flattenTeams"
 				}
 			],
 			"scriptLines": [
@@ -226,10 +226,10 @@
 				"     skipDuplicateMapOutputs: true) ~> selectAllRBs",
 				"selectAllRBs filter(position == 'RB') ~> filter1",
 				"sourceLeagueHierarchy select(mapColumn(",
-				"          divisions = conferences[1].divisions",
+				"          afc = conferences[1].divisions",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
+				"     skipDuplicateMapOutputs: true) ~> selectAFC",
 				"selectGameStatistics select(mapColumn(",
 				"          awayReceiving = statistics.away.receiving.players",
 				"     ),",
@@ -251,15 +251,17 @@
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceiving",
 				"flattenHomeReceiving derive(side = \"away\") ~> derivedAwayReceivingRB",
 				"derivedAwayReceivingRB filter(position == 'RB') ~> filterAwayRecRB",
-				"select2 foldDown(unroll(divisions.teams, divisions.teams),",
+				"selectAFC foldDown(unroll(afc.teams, afc.teams),",
 				"     mapColumn(",
-				"          team_id = divisions.teams.id,",
-				"          team_name = divisions.teams.name,",
-				"          lat = divisions.teams.venue.location.lat,",
-				"          lng = divisions.teams.venue.location.lng",
+				"          team_id = afc.teams.id,",
+				"          team_name = afc.teams.name,",
+				"          lat = afc.teams.venue.location.lat,",
+				"          lng = afc.teams.venue.location.lng,",
+				"          surface = afc.teams.venue.surface,",
+				"          roof_type = afc.teams.venue.roof_type",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten1"
+				"     skipDuplicateMapOutputs: false) ~> flattenTeams"
 			]
 		}
 	}
