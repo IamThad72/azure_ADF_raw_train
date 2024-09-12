@@ -81,6 +81,9 @@
 				},
 				{
 					"name": "selectAwayReceivingRB"
+				},
+				{
+					"name": "flattenHomeReceiving"
 				}
 			],
 			"scriptLines": [
@@ -222,7 +225,21 @@
 				"          awayReceiving = statistics.away.receiving.players",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectAwayReceivingRB"
+				"     skipDuplicateMapOutputs: true) ~> selectAwayReceivingRB",
+				"selectAwayReceivingRB foldDown(unroll(awayReceiving),",
+				"     mapColumn(",
+				"          player_id = awayReceiving.id,",
+				"          position = awayReceiving.position,",
+				"          targets = awayReceiving.targets,",
+				"          receptions = awayReceiving.receptions,",
+				"          yards = awayReceiving.yards,",
+				"          avg_yards = awayReceiving.avg_yards,",
+				"          touchdowns = awayReceiving.touchdowns,",
+				"          yards_after_catch = awayReceiving.yards_after_catch,",
+				"          longest = awayReceiving.longest",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceiving"
 			]
 		}
 	}
