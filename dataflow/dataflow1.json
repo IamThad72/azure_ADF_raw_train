@@ -71,7 +71,7 @@
 					"name": "filterHomeRecRB"
 				},
 				{
-					"name": "select1"
+					"name": "selectAllRBs"
 				},
 				{
 					"name": "filter1"
@@ -84,6 +84,15 @@
 				},
 				{
 					"name": "flattenHomeReceiving"
+				},
+				{
+					"name": "derivedAwayReceivingRB"
+				},
+				{
+					"name": "filterAwayRecRB"
+				},
+				{
+					"name": "flatten1"
 				}
 			],
 			"scriptLines": [
@@ -214,8 +223,8 @@
 				"          birth_place",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 filter(position == 'RB') ~> filter1",
+				"     skipDuplicateMapOutputs: true) ~> selectAllRBs",
+				"selectAllRBs filter(position == 'RB') ~> filter1",
 				"sourceLeagueHierarchy select(mapColumn(",
 				"          divisions = conferences[1].divisions",
 				"     ),",
@@ -239,7 +248,18 @@
 				"          longest = awayReceiving.longest",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceiving"
+				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceiving",
+				"flattenHomeReceiving derive(side = \"away\") ~> derivedAwayReceivingRB",
+				"derivedAwayReceivingRB filter(position == 'RB') ~> filterAwayRecRB",
+				"select2 foldDown(unroll(divisions.teams, divisions.teams),",
+				"     mapColumn(",
+				"          team_id = divisions.teams.id,",
+				"          team_name = divisions.teams.name,",
+				"          lat = divisions.teams.venue.location.lat,",
+				"          lng = divisions.teams.venue.location.lng",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1"
 			]
 		}
 	}
