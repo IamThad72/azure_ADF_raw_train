@@ -92,7 +92,7 @@
 					"name": "filterAwayRecRB"
 				},
 				{
-					"name": "flattenTeams"
+					"name": "flattenAFCTeams"
 				}
 			],
 			"scriptLines": [
@@ -261,7 +261,7 @@
 				"          roof_type = afc.teams.venue.roof_type",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flattenTeams"
+				"     skipDuplicateMapOutputs: false) ~> flattenAFCTeams"
 			]
 		}
 	}
