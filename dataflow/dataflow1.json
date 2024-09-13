@@ -208,6 +208,7 @@
 				"          receptions = homeReceiving.receptions,",
 				"          yards = homeReceiving.yards,",
 				"          avg_yards = homeReceiving.avg_yards,",
+				"          yards_after_catch = homeReceiving.yards_after_catch,",
 				"          touchdowns = homeReceiving.touchdowns,",
 				"          longest_reception = homeReceiving.longest",
 				"     ),",
