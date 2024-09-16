@@ -103,49 +103,58 @@
 														"type": "integer"
 													},
 													"venue": {
-														"type": "object",
-														"properties": {
-															"id": {
-																"type": "string"
-															},
-															"name": {
-																"type": "string"
-															},
-															"city": {
-																"type": "string"
-															},
-															"state": {
-																"type": "string"
-															},
-															"country": {
-																"type": "string"
-															},
-															"zip": {
-																"type": "string"
-															},
-															"address": {
-																"type": "string"
-															},
-															"capacity": {
-																"type": "integer"
-															},
-															"surface": {
-																"type": "string"
-															},
-															"roof_type": {
-																"type": "string"
-															},
-															"sr_id": {
-																"type": "string"
-															},
-															"location": {
-																"type": "object",
-																"properties": {
-																	"lat": {
-																		"type": "string"
-																	},
-																	"lng": {
-																		"type": "string"
+														"type": "array",
+														"items": {
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "string"
+																},
+																"start_date": {
+																	"type": "string"
+																},
+																"end_date": {
+																	"type": "string"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"city": {
+																	"type": "string"
+																},
+																"state": {
+																	"type": "string"
+																},
+																"country": {
+																	"type": "string"
+																},
+																"zip": {
+																	"type": "string"
+																},
+																"address": {
+																	"type": "string"
+																},
+																"capacity": {
+																	"type": "integer"
+																},
+																"surface": {
+																	"type": "string"
+																},
+																"roof_type": {
+																	"type": "string"
+																},
+																"sr_id": {
+																	"type": "string"
+																},
+																"location": {
+																	"type": "object",
+																	"properties": {
+																		"lat": {
+																			"type": "string"
+																		},
+																		"lng": {
+																			"type": "string"
+																		}
 																	}
 																}
 															}

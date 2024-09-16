@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "sourceGameStatistics"
+				},
+				{
+					"dataset": {
+						"referenceName": "dataset_3s_NFL_Raw_League_HIerarchy",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
 				}
 			],
 			"sinks": [],
@@ -37,6 +44,24 @@
 				},
 				{
 					"name": "join1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "flatten3"
+				},
+				{
+					"name": "flatten4"
+				},
+				{
+					"name": "flatten5"
+				},
+				{
+					"name": "join2"
 				}
 			],
 			"scriptLines": [
@@ -56,11 +81,20 @@
 				"     validateSchema: false,",
 				"     format: 'document',",
 				"     systemColumns: true) ~> sourceGameStatistics",
+				"source(output(",
+				"          league as (id as string, name as string, alias as string),",
+				"          conferences as (id as string, name as string, alias as string, divisions as (id as string, name as string, alias as string, teams as (id as string, name as string, market as string, alias as string, sr_id as string, founded as integer, owner as string, general_manager as string, president as string, mascot as string, championships_won as integer, championship_seasons as string, conference_titles as integer, division_titles as integer, playoff_appearances as integer, venue as (id as string, start_date as string, end_date as string, name as string, city as string, state as string, country as string, zip as string, address as string, capacity as integer, surface as string, roof_type as string, sr_id as string, location as (lat as string, lng as string))[], franchise as (id as string, name as string, alias as string), team_colors as (type as string, hex_color as string, alpha as integer, rgb_color as (red as integer, green as integer, blue as integer))[])[])[])[],",
+				"          {_comment} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'document') ~> source1",
 				"sourceGameStatistics select(mapColumn(",
 				"          scheduled,",
 				"          utc_offset,",
 				"          statistics,",
-				"          game_id = id",
+				"          game_id = id,",
+				"          venue_id = summary.venue.id",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectStatsNode",
@@ -69,6 +103,7 @@
 				"          scheduled,",
 				"          utc_offset,",
 				"          game_id,",
+				"          venue_id,",
 				"          player_id = statistics.home.rushing.players.id,",
 				"          player_name = statistics.home.rushing.players.name,",
 				"          position = statistics.home.rushing.players.position,",
@@ -84,6 +119,7 @@
 				"          scheduled,",
 				"          utc_offset,",
 				"          game_id,",
+				"          venue_id,",
 				"          player_id = statistics.home.receiving.players.id,",
 				"          player_name = statistics.home.receiving.players.name,",
 				"          position = statistics.home.receiving.players.position,",
@@ -100,7 +136,57 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1"
+				"     broadcast: 'auto')~> join1",
+				"join1 select(mapColumn(",
+				"          gameplayerID = derivedColumn2@gameplayerID,",
+				"          scheduled = flatten1@scheduled,",
+				"          utc_offset = flatten1@utc_offset,",
+				"          game_id = flatten1@game_id,",
+				"          venue_id = flatten1@venue_id,",
+				"          player_id = flatten1@player_id,",
+				"          player_name = flatten1@player_name,",
+				"          position = flatten1@position,",
+				"          rs_attempts,",
+				"          rs_yards,",
+				"          rs_avg_yards,",
+				"          targets,",
+				"          receptions,",
+				"          rc_yards = yards",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"source1 select(mapColumn(",
+				"          league,",
+				"          conferences",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 foldDown(unroll(conferences, conferences),",
+				"     mapColumn(",
+				"          divisions = conferences.divisions",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten3",
+				"flatten3 foldDown(unroll(divisions.teams),",
+				"     mapColumn(",
+				"          venue = divisions.teams.venue",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten4",
+				"flatten4 foldDown(unroll(venue),",
+				"     mapColumn(",
+				"          venue_id = venue.id,",
+				"          name = venue.name,",
+				"          lat = venue.location.lat,",
+				"          lng = venue.location.lng",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten5",
+				"select1, flatten5 join(select1@venue_id == flatten5@venue_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2"
 			]
 		}
 	}
