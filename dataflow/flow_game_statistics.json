@@ -16,6 +16,27 @@
 			"transformations": [
 				{
 					"name": "selectStatsNode"
+				},
+				{
+					"name": "flatten1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "flatten2"
+				},
+				{
+					"name": "filter2"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -42,7 +63,44 @@
 				"          game_id = id",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectStatsNode"
+				"     skipDuplicateMapOutputs: true) ~> selectStatsNode",
+				"selectStatsNode foldDown(unroll(statistics.home.rushing.players),",
+				"     mapColumn(",
+				"          scheduled,",
+				"          utc_offset,",
+				"          game_id,",
+				"          player_id = statistics.home.rushing.players.id,",
+				"          player_name = statistics.home.rushing.players.name,",
+				"          position = statistics.home.rushing.players.position,",
+				"          rs_attempts = statistics.home.rushing.players.attempts,",
+				"          rs_yards = statistics.home.rushing.players.yards,",
+				"          rs_avg_yards = statistics.home.rushing.players.avg_yards",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 filter(position == 'RB') ~> filter1",
+				"selectStatsNode foldDown(unroll(statistics.home.receiving.players),",
+				"     mapColumn(",
+				"          scheduled,",
+				"          utc_offset,",
+				"          game_id,",
+				"          player_id = statistics.home.receiving.players.id,",
+				"          player_name = statistics.home.receiving.players.name,",
+				"          position = statistics.home.receiving.players.position,",
+				"          targets = statistics.home.receiving.players.targets,",
+				"          receptions = statistics.home.receiving.players.receptions,",
+				"          yards = statistics.home.receiving.players.yards",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten2",
+				"flatten2 filter(position == 'RB') ~> filter2",
+				"filter2 derive(gameplayerID = concat(game_id, player_id)) ~> derivedColumn1",
+				"filter1 derive(gameplayerID = concat(game_id, player_id)) ~> derivedColumn2",
+				"derivedColumn2, derivedColumn1 join(derivedColumn2@gameplayerID == derivedColumn1@gameplayerID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1"
 			]
 		}
 	}
