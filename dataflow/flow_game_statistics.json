@@ -13,7 +13,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "selectStatsNode"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          status as string,",
@@ -29,7 +33,16 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'document') ~> sourceGameStatistics"
+				"     format: 'document') ~> sourceGameStatistics",
+				"sourceGameStatistics select(mapColumn(",
+				"          scheduled,",
+				"          utc_offset,",
+				"          clock,",
+				"          quarter,",
+				"          statistics",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectStatsNode"
 			]
 		}
 	}
