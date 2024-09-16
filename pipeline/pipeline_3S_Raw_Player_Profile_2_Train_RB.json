@@ -23,7 +23,7 @@
 				}
 			},
 			{
-				"name": "Data flow1",
+				"name": "game_statistics",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
