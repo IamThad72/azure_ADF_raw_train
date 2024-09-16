@@ -1,5 +1,5 @@
 {
-	"name": "dataflow2",
+	"name": "flow_game_statistics",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
