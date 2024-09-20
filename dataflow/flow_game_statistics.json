@@ -31,7 +31,7 @@
 					"name": "filter1"
 				},
 				{
-					"name": "flatten2"
+					"name": "flattenHomeReceiving"
 				},
 				{
 					"name": "filter2"
@@ -129,8 +129,8 @@
 				"          yards_after_catch = statistics.home.receiving.players.yards_after_catch",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten2",
-				"flatten2 filter(position == 'RB') ~> filter2",
+				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceiving",
+				"flattenHomeReceiving filter(position == 'RB') ~> filter2",
 				"filter2 derive(gameplayerID = concat(game_id, player_id)) ~> derivedColumn1",
 				"filter1 derive(gameplayerID = concat(game_id, player_id)) ~> derivedColumn2",
 				"derivedColumn2, derivedColumn1 join(derivedColumn2@gameplayerID == derivedColumn1@gameplayerID,",
