@@ -68,7 +68,10 @@
 					"name": "flattenVenue"
 				},
 				{
-					"name": "join2"
+					"name": "joinLatLng"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -213,7 +216,14 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join2"
+				"     broadcast: 'auto')~> joinLatLng",
+				"sourcePlayerProfile select(mapColumn(",
+				"          birth_date,",
+				"          weight,",
+				"          height",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}
