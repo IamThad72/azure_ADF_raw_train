@@ -16,7 +16,7 @@
 						"referenceName": "dataset_3s_NFL_Raw_League_HIerarchy",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "sourceLeagueHierarchy"
 				}
 			],
 			"sinks": [],
@@ -88,7 +88,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'document') ~> source1",
+				"     format: 'document') ~> sourceLeagueHierarchy",
 				"sourceGameStatistics select(mapColumn(",
 				"          scheduled,",
 				"          utc_offset,",
@@ -156,7 +156,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"source1 select(mapColumn(",
+				"sourceLeagueHierarchy select(mapColumn(",
 				"          league,",
 				"          conferences",
 				"     ),",
