@@ -25,40 +25,40 @@
 					"name": "selectStatsNode"
 				},
 				{
-					"name": "flatten1"
+					"name": "flattenHomeRushing"
 				},
 				{
-					"name": "filter1"
+					"name": "filterRBrs"
 				},
 				{
 					"name": "flattenHomeReceiving"
 				},
 				{
-					"name": "filter2"
+					"name": "filterRBrc"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "derivedGamePlayerID0"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "derivedGamePlayerID1"
 				},
 				{
-					"name": "join1"
+					"name": "joinGamePlayer"
 				},
 				{
-					"name": "select1"
+					"name": "selectRBstats"
 				},
 				{
-					"name": "select2"
+					"name": "selectLeagueConferences"
 				},
 				{
-					"name": "flatten3"
+					"name": "flattenDivisions"
 				},
 				{
-					"name": "flatten4"
+					"name": "flattenTeams"
 				},
 				{
-					"name": "flatten5"
+					"name": "flattenVenue"
 				},
 				{
 					"name": "join2"
@@ -112,8 +112,8 @@
 				"          rs_avg_yards = statistics.home.rushing.players.avg_yards",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten1",
-				"flatten1 filter(position == 'RB') ~> filter1",
+				"     skipDuplicateMapOutputs: false) ~> flattenHomeRushing",
+				"flattenHomeRushing filter(position == 'RB') ~> filterRBrs",
 				"selectStatsNode foldDown(unroll(statistics.home.receiving.players),",
 				"     mapColumn(",
 				"          scheduled,",
@@ -130,23 +130,23 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceiving",
-				"flattenHomeReceiving filter(position == 'RB') ~> filter2",
-				"filter2 derive(gameplayerID = concat(game_id, player_id)) ~> derivedColumn1",
-				"filter1 derive(gameplayerID = concat(game_id, player_id)) ~> derivedColumn2",
-				"derivedColumn2, derivedColumn1 join(derivedColumn2@gameplayerID == derivedColumn1@gameplayerID,",
+				"flattenHomeReceiving filter(position == 'RB') ~> filterRBrc",
+				"filterRBrc derive(gameplayerID = concat(game_id, player_id)) ~> derivedGamePlayerID0",
+				"filterRBrs derive(gameplayerID = concat(game_id, player_id)) ~> derivedGamePlayerID1",
+				"derivedGamePlayerID1, derivedGamePlayerID0 join(derivedGamePlayerID1@gameplayerID == derivedGamePlayerID0@gameplayerID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"join1 select(mapColumn(",
-				"          gameplayerID = derivedColumn2@gameplayerID,",
-				"          scheduled = flatten1@scheduled,",
-				"          utc_offset = flatten1@utc_offset,",
-				"          game_id = flatten1@game_id,",
-				"          venue_id = flatten1@venue_id,",
-				"          player_id = flatten1@player_id,",
-				"          player_name = flatten1@player_name,",
-				"          position = flatten1@position,",
+				"     broadcast: 'auto')~> joinGamePlayer",
+				"joinGamePlayer select(mapColumn(",
+				"          gameplayerID = derivedGamePlayerID1@gameplayerID,",
+				"          scheduled = flattenHomeRushing@scheduled,",
+				"          utc_offset = flattenHomeRushing@utc_offset,",
+				"          game_id = flattenHomeRushing@game_id,",
+				"          venue_id = flattenHomeRushing@venue_id,",
+				"          player_id = flattenHomeRushing@player_id,",
+				"          player_name = flattenHomeRushing@player_name,",
+				"          position = flattenHomeRushing@position,",
 				"          rs_attempts,",
 				"          rs_yards,",
 				"          rs_avg_yards,",
@@ -155,26 +155,26 @@
 				"          rc_yards = yards",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
+				"     skipDuplicateMapOutputs: true) ~> selectRBstats",
 				"sourceLeagueHierarchy select(mapColumn(",
 				"          league,",
 				"          conferences",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
-				"select2 foldDown(unroll(conferences, conferences),",
+				"     skipDuplicateMapOutputs: true) ~> selectLeagueConferences",
+				"selectLeagueConferences foldDown(unroll(conferences, conferences),",
 				"     mapColumn(",
 				"          divisions = conferences.divisions",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten3",
-				"flatten3 foldDown(unroll(divisions.teams),",
+				"     skipDuplicateMapOutputs: false) ~> flattenDivisions",
+				"flattenDivisions foldDown(unroll(divisions.teams),",
 				"     mapColumn(",
 				"          venue = divisions.teams.venue",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten4",
-				"flatten4 foldDown(unroll(venue),",
+				"     skipDuplicateMapOutputs: false) ~> flattenTeams",
+				"flattenTeams foldDown(unroll(venue),",
 				"     mapColumn(",
 				"          venue_id = venue.id,",
 				"          name = venue.name,",
@@ -182,8 +182,8 @@
 				"          lng = venue.location.lng",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten5",
-				"select1, flatten5 join(select1@venue_id == flatten5@venue_id,",
+				"     skipDuplicateMapOutputs: false) ~> flattenVenue",
+				"selectRBstats, flattenVenue join(selectRBstats@venue_id == flattenVenue@venue_id,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
