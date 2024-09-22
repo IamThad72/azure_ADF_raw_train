@@ -77,7 +77,7 @@
 					"name": "join1"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "derivedPlayerAgeDays"
 				}
 			],
 			"scriptLines": [
@@ -237,7 +237,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1 derive(birthDateInt = toInteger(toLong(toTimestamp(substring(scheduled, 1, 10), 'yyyy-MM-dd')) / 86400000) - toInteger(toLong(toTimestamp(birth_date, 'yyyy-MM-dd')) / 86400000)) ~> derivedColumn1"
+				"join1 derive(player_age_days = game_idtoInteger(toLong(toTimestamp(substring(scheduled, 1, 10), 'yyyy-MM-dd')) / 86400000) - toInteger(toLong(toTimestamp(birth_date, 'yyyy-MM-dd')) / 86400000)) ~> derivedPlayerAgeDays"
 			]
 		}
 	}
