@@ -86,7 +86,10 @@
 					"name": "flattenPassing"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "derivedQBR"
+				},
+				{
+					"name": "filterRBps"
 				}
 			],
 			"scriptLines": [
@@ -267,7 +270,14 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenPassing",
-				"flattenPassing derive(passer_rating = ERROR_FUNCTION('')) ~> derivedColumn2"
+				"flattenPassing derive(passer_rating = round(\r",
+				" (((((pass_completions/pass_attempts) - .3)*5) +\r",
+				" ((yards/pass_attempts-3)*.25)+\r",
+				" ((pass_touchdowns/pass_attempts)*20)+\r",
+				" (2.375-((interceptions/pass_attempts)*25)))/6)*100\r",
+				"\r",
+				",6)) ~> derivedQBR",
+				"derivedQBR filter(position == 'RB') ~> filterRBps"
 			]
 		}
 	}
