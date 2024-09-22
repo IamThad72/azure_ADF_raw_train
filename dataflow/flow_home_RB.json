@@ -50,7 +50,7 @@
 					"name": "derivedGamePlayerID1"
 				},
 				{
-					"name": "joinGamePlayer"
+					"name": "joinRsRc"
 				},
 				{
 					"name": "selectRBstats"
@@ -188,7 +188,7 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> joinGamePlayer",
+				"     broadcast: 'auto')~> joinRsRc",
 				"join1 select(mapColumn(",
 				"          gameplayerID = derivedGamePlayerID1@gameplayerID,",
 				"          scheduled = flattenHomeRushing@scheduled,",
@@ -283,7 +283,7 @@
 				"\r",
 				") ~> derivedQBR",
 				"derivedQBR derive(gamePlayerID = concat(game_id, player_id)) ~> derivedColumn1",
-				"joinGamePlayer, derivedColumn1 join(derivedGamePlayerID1@gameplayerID == derivedColumn1@gamePlayerID,",
+				"joinRsRc, derivedColumn1 join(derivedGamePlayerID1@gameplayerID == derivedColumn1@gamePlayerID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
