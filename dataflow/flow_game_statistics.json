@@ -71,13 +71,16 @@
 					"name": "joinLatLng"
 				},
 				{
-					"name": "select1"
+					"name": "selectPlayerBasicInfo"
 				},
 				{
 					"name": "join1"
 				},
 				{
 					"name": "derivedPlayerAgeDays"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -231,13 +234,14 @@
 				"          player_id = id",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"joinLatLng, select1 join(selectRBstats@player_id == select1@player_id,",
+				"     skipDuplicateMapOutputs: true) ~> selectPlayerBasicInfo",
+				"joinLatLng, selectPlayerBasicInfo join(selectRBstats@player_id == selectPlayerBasicInfo@player_id,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1 derive(player_age_days = game_idtoInteger(toLong(toTimestamp(substring(scheduled, 1, 10), 'yyyy-MM-dd')) / 86400000) - toInteger(toLong(toTimestamp(birth_date, 'yyyy-MM-dd')) / 86400000)) ~> derivedPlayerAgeDays"
+				"join1 derive(player_age_days = toInteger(toLong(toTimestamp(substring(scheduled, 1, 10), 'yyyy-MM-dd')) / 86400000) - toInteger(toLong(toTimestamp(birth_date, 'yyyy-MM-dd')) / 86400000)) ~> derivedPlayerAgeDays",
+				"derivedPlayerAgeDays derive(player_age_years = round((player_age_days / 365), 2)) ~> derivedColumn1"
 			]
 		}
 	}
