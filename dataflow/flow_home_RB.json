@@ -1,5 +1,5 @@
 {
-	"name": "flow_game_statistics",
+	"name": "flow_home_RB",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -81,6 +81,9 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "flattenPassing"
 				}
 			],
 			"scriptLines": [
@@ -241,7 +244,25 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
 				"join1 derive(player_age_days = toInteger(toLong(toTimestamp(substring(scheduled, 1, 10), 'yyyy-MM-dd')) / 86400000) - toInteger(toLong(toTimestamp(birth_date, 'yyyy-MM-dd')) / 86400000)) ~> derivedPlayerAgeDays",
-				"derivedPlayerAgeDays derive(player_age_years = round((player_age_days / 365), 2)) ~> derivedColumn1"
+				"derivedPlayerAgeDays derive(player_age_years = round((player_age_days / 365), 2)) ~> derivedColumn1",
+				"selectStatsNode foldDown(unroll(statistics.home.passing.players),",
+				"     mapColumn(",
+				"          scheduled,",
+				"          utc_offset,",
+				"          game_id,",
+				"          venue_id,",
+				"          player_id = statistics.home.passing.players.id,",
+				"          position = statistics.home.passing.players.position,",
+				"          pass_attempts = statistics.home.passing.players.attempts,",
+				"          pass_completions = statistics.home.passing.players.completions,",
+				"          cmp_pct = statistics.home.passing.players.cmp_pct,",
+				"          yards = statistics.home.passing.players.yards,",
+				"          interceptions = statistics.home.passing.players.interceptions,",
+				"          sacks = statistics.home.passing.players.sacks,",
+				"          sack_yards = statistics.home.passing.players.sack_yards",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flattenPassing"
 			]
 		}
 	}
