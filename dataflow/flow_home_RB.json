@@ -92,7 +92,7 @@
 					"name": "derivedColumn1"
 				},
 				{
-					"name": "join1"
+					"name": "joinRsRcPs"
 				}
 			],
 			"scriptLines": [
@@ -189,7 +189,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> joinRsRc",
-				"join1 select(mapColumn(",
+				"joinRsRcPs select(mapColumn(",
 				"          gameplayerID = derivedGamePlayerID1@gameplayerID,",
 				"          scheduled = flattenHomeRushing@scheduled,",
 				"          utc_offset = flattenHomeRushing@utc_offset,",
@@ -287,7 +287,7 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1"
+				"     broadcast: 'auto')~> joinRsRcPs"
 			]
 		}
 	}
