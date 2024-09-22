@@ -74,7 +74,7 @@
 					"name": "selectPlayerBasicInfo"
 				},
 				{
-					"name": "join1"
+					"name": "joinplayerLatLng"
 				},
 				{
 					"name": "derivedPlayerAgeDays"
@@ -248,8 +248,8 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"join1 derive(player_age_days = toInteger(toLong(toTimestamp(substring(scheduled, 1, 10), 'yyyy-MM-dd')) / 86400000) - toInteger(toLong(toTimestamp(birth_date, 'yyyy-MM-dd')) / 86400000)) ~> derivedPlayerAgeDays",
+				"     broadcast: 'auto')~> joinplayerLatLng",
+				"joinplayerLatLng derive(player_age_days = toInteger(toLong(toTimestamp(substring(scheduled, 1, 10), 'yyyy-MM-dd')) / 86400000) - toInteger(toLong(toTimestamp(birth_date, 'yyyy-MM-dd')) / 86400000)) ~> derivedPlayerAgeDays",
 				"derivedPlayerAgeDays derive(player_age_years = round((player_age_days / 365), 2)) ~> derivedAgeinYears",
 				"selectStatsNode foldDown(unroll(statistics.home.passing.players),",
 				"     mapColumn(",
@@ -277,7 +277,7 @@
 				" (2.375-((interceptions/pass_attempts)*25)))/6)*100\r",
 				"\r",
 				",6)) ~> derivedQBR",
-				"flattenPassing filter(ERROR_FUNCTION('')) ~> filterRBps"
+				"flattenPassing filter(player_id == 'RB') ~> filterRBps"
 			]
 		}
 	}
