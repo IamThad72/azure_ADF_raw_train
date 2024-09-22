@@ -80,7 +80,7 @@
 					"name": "derivedPlayerAgeDays"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "derivedAgeinYears"
 				},
 				{
 					"name": "flattenPassing"
@@ -250,7 +250,7 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
 				"join1 derive(player_age_days = toInteger(toLong(toTimestamp(substring(scheduled, 1, 10), 'yyyy-MM-dd')) / 86400000) - toInteger(toLong(toTimestamp(birth_date, 'yyyy-MM-dd')) / 86400000)) ~> derivedPlayerAgeDays",
-				"derivedPlayerAgeDays derive(player_age_years = round((player_age_days / 365), 2)) ~> derivedColumn1",
+				"derivedPlayerAgeDays derive(player_age_years = round((player_age_days / 365), 2)) ~> derivedAgeinYears",
 				"selectStatsNode foldDown(unroll(statistics.home.passing.players),",
 				"     mapColumn(",
 				"          scheduled,",
