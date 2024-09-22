@@ -78,9 +78,6 @@
 				},
 				{
 					"name": "derivedColumn1"
-				},
-				{
-					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -240,8 +237,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1 derive(birthDateInt = toInteger(toLong(toTimestamp(substring(scheduled, 1, 10), 'yyyy-MM-dd')) / 86400000) - toInteger(toLong(toTimestamp(birth_date, 'yyyy-MM-dd')) / 86400000)) ~> derivedColumn1",
-				"derivedColumn1 derive(AgeInDays = toInteger(toLong(toTimestamp(substring(scheduled, 1, 10), 'yyyy-MM-dd')) / 86400000) - birthDateInt) ~> derivedColumn2"
+				"join1 derive(birthDateInt = toInteger(toLong(toTimestamp(substring(scheduled, 1, 10), 'yyyy-MM-dd')) / 86400000) - toInteger(toLong(toTimestamp(birth_date, 'yyyy-MM-dd')) / 86400000)) ~> derivedColumn1"
 			]
 		}
 	}
