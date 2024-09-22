@@ -84,6 +84,9 @@
 				},
 				{
 					"name": "flattenPassing"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -259,10 +262,12 @@
 				"          yards = statistics.home.passing.players.yards,",
 				"          interceptions = statistics.home.passing.players.interceptions,",
 				"          sacks = statistics.home.passing.players.sacks,",
-				"          sack_yards = statistics.home.passing.players.sack_yards",
+				"          sack_yards = statistics.home.passing.players.sack_yards,",
+				"          pass_touchdowns = statistics.home.passing.players.touchdowns",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flattenPassing"
+				"     skipDuplicateMapOutputs: false) ~> flattenPassing",
+				"flattenPassing derive(passer_rating = ERROR_FUNCTION('')) ~> derivedColumn2"
 			]
 		}
 	}
