@@ -89,10 +89,19 @@
 					"name": "derivedQBR"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "derivedGamePlayerID2"
 				},
 				{
 					"name": "joinRsRcPs"
+				},
+				{
+					"name": "flattenHomeFumbles"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "filterHomeFumbleRB"
 				}
 			],
 			"scriptLines": [
@@ -279,15 +288,26 @@
 				" ((pass_touchdowns/pass_attempts)*20)+\r",
 				" (2.375-((interceptions/pass_attempts)*25)))/6)*100\r",
 				"\r",
-				",6), toDouble(0.00))\r",
-				"\r",
-				") ~> derivedQBR",
-				"derivedQBR derive(gamePlayerID = concat(game_id, player_id)) ~> derivedColumn1",
-				"joinRsRc, derivedColumn1 join(derivedGamePlayerID1@gameplayerID == derivedColumn1@gamePlayerID,",
+				",6), toDouble(0.00))) ~> derivedQBR",
+				"derivedQBR derive(gamePlayerID = concat(game_id, player_id)) ~> derivedGamePlayerID2",
+				"joinRsRc, derivedGamePlayerID2 join(derivedGamePlayerID1@gameplayerID == derivedGamePlayerID2@gamePlayerID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> joinRsRcPs"
+				"     broadcast: 'auto')~> joinRsRcPs",
+				"selectStatsNode foldDown(unroll(statistics.home.fumbles.players, statistics.home.fumbles.players),",
+				"     mapColumn(",
+				"          scheduled,",
+				"          game_id,",
+				"          player_id = statistics.home.fumbles.players.id,",
+				"          position = statistics.home.fumbles.players.position,",
+				"          fumbles = statistics.home.fumbles.players.fumbles,",
+				"          lost_fumbles = statistics.home.fumbles.players.lost_fumbles",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flattenHomeFumbles",
+				"filterHomeFumbleRB derive(gamePlayerID = concat(game_id, player_id)) ~> derivedColumn1",
+				"flattenHomeFumbles filter(position == 'RB') ~> filterHomeFumbleRB"
 			]
 		}
 	}
