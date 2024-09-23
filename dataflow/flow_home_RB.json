@@ -98,7 +98,7 @@
 					"name": "flattenHomeFumbles"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "derivedGamePlayerID3"
 				},
 				{
 					"name": "filterHomeFumbleRB"
@@ -306,7 +306,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeFumbles",
-				"filterHomeFumbleRB derive(gamePlayerID = concat(game_id, player_id)) ~> derivedColumn1",
+				"filterHomeFumbleRB derive(gamePlayerID = concat(game_id, player_id)) ~> derivedGamePlayerID3",
 				"flattenHomeFumbles filter(position == 'RB') ~> filterHomeFumbleRB"
 			]
 		}
