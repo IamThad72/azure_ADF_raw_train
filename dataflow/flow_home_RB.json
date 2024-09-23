@@ -102,6 +102,9 @@
 				},
 				{
 					"name": "filterHomeFumbleRB"
+				},
+				{
+					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -198,7 +201,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> joinRsRc",
-				"joinRsRcPs select(mapColumn(",
+				"join1 select(mapColumn(",
 				"          gameplayerID = derivedGamePlayerID1@gameplayerID,",
 				"          scheduled = flattenHomeRushing@scheduled,",
 				"          utc_offset = flattenHomeRushing@utc_offset,",
@@ -307,7 +310,12 @@
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeFumbles",
 				"filterHomeFumbleRB derive(gamePlayerID = concat(game_id, player_id)) ~> derivedGamePlayerID3",
-				"flattenHomeFumbles filter(position == 'RB') ~> filterHomeFumbleRB"
+				"flattenHomeFumbles filter(position == 'RB') ~> filterHomeFumbleRB",
+				"joinRsRcPs, derivedGamePlayerID3 join(derivedGamePlayerID2@gamePlayerID == derivedGamePlayerID3@gamePlayerID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1"
 			]
 		}
 	}
