@@ -218,7 +218,9 @@
 				"          rs_avg_yards,",
 				"          targets,",
 				"          receptions,",
-				"          rc_yards = flattenHomeReceiving@yards",
+				"          rc_yards = flattenHomeReceiving@yards,",
+				"          fumbles,",
+				"          lost_fumbles",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectRBstats",
@@ -319,8 +321,24 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> joinFumbles",
-				"derivedAgeinYears derive(testJson = '{ \"id\": \"' + toString(gameplayerID) + '\", \"position\": \"' + position + '\", \"age\": ' + toString(player_age_days) + ', \"conditions\": { \"location\": \"' + toString(lat) + '\" } }'\r",
-				") ~> derivedColumn1"
+				"derivedAgeinYears derive(testJson = '{ \"id\": \"' + toString(gameplayerID) + \r",
+				"    '\", \"position\": \"' + position + \r",
+				"    '\", \"height\": \"' + toString(height) +\r",
+				"    '\", \"weight\": \"' + toString(weight) + \r",
+				"    '\", \"age_in_days\": ' + toString(player_age_days) + \r",
+				"    ', \"health\":\"NA\",' +\r",
+				"    ', \"stats\": { ' +\r",
+				"            '\"rushing\": {' + \r",
+				"                ' \"rs_attempts\": ' + toString(rs_attempts) + \r",
+				"                ' \"rs_yards\": ' + toString(rs_yards) + \r",
+				"                ' \"rs_avg_yards\": ' + toString(rs_avg_yards) +\r",
+				"                ' \"rs_yards\": ' + toString(rs_yards) +\r",
+				"            '} },' +\r",
+				"    ', \"conditions\": { '+\r",
+				"            '\"location\": ' + toString(lat) + \r",
+				"        ' }' +\r",
+				"        \r",
+				"' }') ~> derivedColumn1"
 			]
 		}
 	}
