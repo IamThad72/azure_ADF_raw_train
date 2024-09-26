@@ -108,6 +108,9 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -193,8 +196,8 @@
 				"          position = statistics.home.receiving.players.position,",
 				"          targets = statistics.home.receiving.players.targets,",
 				"          receptions = statistics.home.receiving.players.receptions,",
-				"          yards = statistics.home.receiving.players.yards,",
-				"          yards_after_catch = statistics.home.receiving.players.yards_after_catch,",
+				"          rc_yards = statistics.home.receiving.players.yards,",
+				"          rc_yards_after_catch = statistics.home.receiving.players.yards_after_catch,",
 				"          rc_touchdowns = statistics.home.receiving.players.touchdowns,",
 				"          rc_longest_touchdown = statistics.home.receiving.players.longest_touchdown,",
 				"          rc_avg_yards = statistics.home.receiving.players.avg_yards",
@@ -223,14 +226,15 @@
 				"          rs_avg_yards,",
 				"          targets,",
 				"          receptions,",
-				"          rc_yards = yards,",
+				"          rc_yards,",
 				"          fumbles,",
 				"          lost_fumbles,",
 				"          rs_touchdowns,",
 				"          rs_longest_touchdown,",
 				"          rc_touchdowns,",
 				"          rc_longest_touchdown,",
-				"          ps_touchdowns",
+				"          ps_touchdowns,",
+				"          rc_yards_after_catch",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectRBstats",
@@ -368,7 +372,12 @@
 				"            '\"location\": ' + toString(lat) + \r",
 				"        ' }' +\r",
 				"        \r",
-				"' }') ~> derivedColumn1"
+				"' }') ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          testJson",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}
