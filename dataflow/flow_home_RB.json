@@ -114,6 +114,9 @@
 				},
 				{
 					"name": "derivedNoFumbles"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -191,7 +194,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeRushing",
-				"flattenHomeRushing filter(position == 'RB') ~> filterRBrs",
+				"derivedColumn1 filter(position == 'RB') ~> filterRBrs",
 				"selectStatsNode foldDown(unroll(statistics.home.receiving.players),",
 				"     mapColumn(",
 				"          scheduled,",
@@ -400,7 +403,8 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"joinFumbles derive(fumbleNulls = iif(isNull(lost_fumbles), 0, lost_fumbles),",
-				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles"
+				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles",
+				"flattenHomeRushing derive(avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedColumn1"
 			]
 		}
 	}
