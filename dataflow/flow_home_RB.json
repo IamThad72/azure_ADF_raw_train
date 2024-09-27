@@ -113,7 +113,7 @@
 					"name": "select1"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "derivedNoFumbles"
 				}
 			],
 			"scriptLines": [
@@ -215,7 +215,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> joinRsRc",
-				"derivedColumn2 select(mapColumn(",
+				"derivedNoFumbles select(mapColumn(",
 				"          gameplayerID = derivedGamePlayerID1@gameplayerID,",
 				"          scheduled = flattenHomeRushing@scheduled,",
 				"          utc_offset = flattenHomeRushing@utc_offset,",
@@ -394,7 +394,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"joinFumbles derive(fumbleNulls = iif(isNull(lost_fumbles), 0, lost_fumbles),",
-				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedColumn2"
+				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles"
 			]
 		}
 	}
