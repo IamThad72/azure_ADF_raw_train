@@ -107,7 +107,7 @@
 					"name": "joinFumbles"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "derivedJson"
 				},
 				{
 					"name": "select1"
@@ -374,21 +374,21 @@
 				"            '}'+\r",
 				"          ' },' +\r",
 				"    ' \"conditions\": { '+\r",
-				"            '\"date\": ' + toString(scheduled) +\r",
-				"            ',\"precipitation\":\"NA\"' +\r",
+				"            '\"date\": \"' + toString(scheduled) +\r",
+				"            '\",\"precipitation\":\"NA\"' +\r",
 				"            ',\"temperature\":\"NA\"' +\r",
 				"            ',\"wind\":\"NA\"' +\r",
 				"            ',\"surface\":\"NA\"' +\r",
 				"            ',\"roof\":\"NA\"' +\r",
 				"            ',\"side\":\"home\" ' +\r",
-				"            ', location\":{' +\r",
+				"            ',\"location\":{' +\r",
 				"                 '\"lat\": ' + toString(lat) +\r",
 				"              ',\"lng\": ' + toString(lng) + \r",
-				"            '},' + \r",
+				"            '}' + \r",
 				"        ' }' +\r",
 				"        \r",
-				"' }') ~> derivedColumn1",
-				"derivedColumn1 select(mapColumn(",
+				"' }') ~> derivedJson",
+				"derivedJson select(mapColumn(",
 				"          testJson",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
