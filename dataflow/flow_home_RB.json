@@ -208,7 +208,7 @@
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceiving",
 				"flattenHomeReceiving filter(position == 'RB') ~> filterRBrc",
-				"filterRBrc derive(gameplayerID = concat(game_id, player_id)) ~> derivedGamePlayerID0",
+				"filterRBrc derive(gameplayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID0",
 				"filterRBrs derive(gameplayerID = concat(game_id, player_id)) ~> derivedGamePlayerID1",
 				"derivedGamePlayerID1, derivedGamePlayerID0 join(derivedGamePlayerID1@gameplayerID == derivedGamePlayerID0@gameplayerID,",
 				"     joinType:'inner',",
