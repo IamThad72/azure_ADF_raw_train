@@ -41,9 +41,6 @@
 					"name": "flattenHomeReceiving"
 				},
 				{
-					"name": "filterRBrc"
-				},
-				{
 					"name": "derivedGamePlayerID0"
 				},
 				{
@@ -120,6 +117,9 @@
 				},
 				{
 					"name": "derivedReceiveAverage"
+				},
+				{
+					"name": "filterRBrc"
 				}
 			],
 			"scriptLines": [
@@ -215,8 +215,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeReceiving",
-				"flattenHomeReceiving filter(position == 'RB') ~> filterRBrc",
-				"derivedReceiveAverage derive(gameplayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID0",
+				"filterRBrc derive(gameplayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID0",
 				"filterRBrs derive(gameplayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID1",
 				"derivedGamePlayerID1, derivedGamePlayerID0 join(derivedGamePlayerID1@gameplayerID == derivedGamePlayerID0@gameplayerID,",
 				"     joinType:'inner',",
@@ -382,8 +381,12 @@
 				"            '\"passing\": {' + \r",
 				"                ' \"ps_attempts\": ' + toString(ps_attempts) + \r",
 				"                ', \"ps_yards\": ' + toString(ps_yards) + \r",
+				"                ', \"ps_completions\": ' + toString(ps_completions) + \r",
 				"                ', \"ps_touchdowns\": ' + toString(ps_touchdowns) +\r",
 				"                ', \"ps_touchdowns_longest\": ' + toString(rs_longest_touchdown) +\r",
+				"                ', \"interceptions\": ' + toString(interceptions) +\r",
+				"                ', \"qbr\": ' + toString(passer_rating) +\r",
+				"\r",
 				"            '},'+\r",
 				"            '\"fumble\": {' + \r",
 				"                ' \"fumbles\": ' + toString(fumbles) + \r",
@@ -413,8 +416,9 @@
 				"joinFumbles derive(fumbleNulls = iif(isNull(lost_fumbles), 0, lost_fumbles),",
 				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles",
 				"flattenHomeRushing derive(rs_avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedRushAverage",
-				"filterRBrc derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)\r",
-				") ~> derivedReceiveAverage"
+				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)\r",
+				") ~> derivedReceiveAverage",
+				"derivedReceiveAverage filter(position == 'RB') ~> filterRBrc"
 			]
 		}
 	}
