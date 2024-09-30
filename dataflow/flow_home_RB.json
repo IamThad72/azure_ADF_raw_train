@@ -426,12 +426,13 @@
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",
-				"     upsertable:false,",
+				"     upsertable:true,",
 				"     format: 'document',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
-				"          {[Root]} = testJson",
+				"          {[Root]} = testJson,",
+				"          testJson",
 				"     )) ~> sink1"
 			]
 		}
