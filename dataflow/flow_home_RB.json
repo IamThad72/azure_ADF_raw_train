@@ -26,15 +26,7 @@
 					"name": "sourcePlayerProfile"
 				}
 			],
-			"sinks": [
-				{
-					"dataset": {
-						"referenceName": "dataset_3S_NFL_Train_Player_Profile_RB",
-						"type": "DatasetReference"
-					},
-					"name": "RBHomeTrain"
-				}
-			],
+			"sinks": [],
 			"transformations": [
 				{
 					"name": "selectStatsNode"
@@ -419,18 +411,8 @@
 				"joinFumbles derive(fumbleNulls = iif(isNull(lost_fumbles), 0, lost_fumbles),",
 				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles",
 				"flattenHomeRushing derive(rs_avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedRushAverage",
-				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)\r",
-				") ~> derivedReceiveAverage",
-				"derivedReceiveAverage filter(position == 'RB') ~> filterRBrc",
-				"select1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'document',",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> RBHomeTrain"
+				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
+				"derivedReceiveAverage filter(position == 'RB') ~> filterRBrc"
 			]
 		}
 	}
