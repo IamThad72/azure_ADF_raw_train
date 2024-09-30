@@ -32,7 +32,7 @@
 						"referenceName": "datasetNFLTrain",
 						"type": "DatasetReference"
 					},
-					"name": "sinkRBHome"
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -112,9 +112,6 @@
 					"name": "derivedJson"
 				},
 				{
-					"name": "selectJson"
-				},
-				{
 					"name": "derivedNoFumbles"
 				},
 				{
@@ -125,6 +122,9 @@
 				},
 				{
 					"name": "filterRBrc"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -411,17 +411,17 @@
 				"        ' }' +\r",
 				"        \r",
 				"' }') ~> derivedJson",
-				"derivedJson select(mapColumn(",
-				"          testJson",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectJson",
 				"joinFumbles derive(fumbleNulls = iif(isNull(lost_fumbles), 0, lost_fumbles),",
 				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles",
 				"flattenHomeRushing derive(rs_avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedRushAverage",
 				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
 				"derivedReceiveAverage filter(position == 'RB') ~> filterRBrc",
-				"selectJson sink(allowSchemaDrift: true,",
+				"derivedJson select(mapColumn(",
+				"          testJson",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -429,7 +429,7 @@
 				"     upsertable:false,",
 				"     format: 'document',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sinkRBHome"
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
