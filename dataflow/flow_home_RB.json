@@ -29,7 +29,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "datasetNFLTrain",
+						"referenceName": "Json1",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -423,13 +423,9 @@
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:true,",
-				"     format: 'document',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     format: 'document') ~> sink1"
 			]
 		}
 	}
