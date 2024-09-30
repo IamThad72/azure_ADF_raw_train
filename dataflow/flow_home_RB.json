@@ -417,7 +417,7 @@
 				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
 				"derivedReceiveAverage filter(position == 'RB') ~> filterRBrc",
 				"derivedJson select(mapColumn(",
-				"          testJson = jsonObject",
+				"          jsonObject",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectJson",
