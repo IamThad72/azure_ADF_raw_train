@@ -1,15 +1,15 @@
 {
-	"name": "CosmosDbNoSqlContainer1",
+	"name": "datasetNFLTrain",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "cosmos_3S_Train_NFL",
+			"referenceName": "linkedServiceNFLTrain",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "CosmosDbSqlApiCollection",
 		"schema": {},
 		"typeProperties": {
-			"collectionName": "RB_Home"
+			"collectionName": "rb_home"
 		}
 	}
 }
