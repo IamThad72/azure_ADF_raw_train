@@ -104,7 +104,7 @@
 					"name": "derivedJson"
 				},
 				{
-					"name": "select1"
+					"name": "selectJson"
 				},
 				{
 					"name": "derivedNoFumbles"
@@ -407,7 +407,7 @@
 				"          testJson",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
+				"     skipDuplicateMapOutputs: true) ~> selectJson",
 				"joinFumbles derive(fumbleNulls = iif(isNull(lost_fumbles), 0, lost_fumbles),",
 				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles",
 				"flattenHomeRushing derive(rs_avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedRushAverage",
