@@ -429,7 +429,10 @@
 				"     upsertable:false,",
 				"     format: 'document',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          {[Root]} = testJson",
+				"     )) ~> sink1"
 			]
 		}
 	}
