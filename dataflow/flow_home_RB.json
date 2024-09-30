@@ -26,7 +26,15 @@
 					"name": "sourcePlayerProfile"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "datasetNFLTrain",
+						"type": "DatasetReference"
+					},
+					"name": "sinkRBHome"
+				}
+			],
 			"transformations": [
 				{
 					"name": "selectStatsNode"
@@ -134,7 +142,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     limit: 25,",
+				"     limit: 50,",
 				"     format: 'document',",
 				"     systemColumns: true) ~> sourceGameStatistics",
 				"source(output(",
@@ -412,7 +420,16 @@
 				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles",
 				"flattenHomeRushing derive(rs_avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedRushAverage",
 				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
-				"derivedReceiveAverage filter(position == 'RB') ~> filterRBrc"
+				"derivedReceiveAverage filter(position == 'RB') ~> filterRBrc",
+				"selectJson sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'document',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkRBHome"
 			]
 		}
 	}
