@@ -29,7 +29,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "Json1",
+						"referenceName": "datasetNFLTrain",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -124,7 +124,7 @@
 					"name": "filterRBrc"
 				},
 				{
-					"name": "select1"
+					"name": "selectJson"
 				}
 			],
 			"scriptLines": [
@@ -358,7 +358,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> joinFumbles",
-				"derivedAgeinYears derive(testJson = '{ \"id\": \"' + gameplayerID + \r",
+				"derivedAgeinYears derive(jsonObject = '{ \"id\": \"' + gameplayerID + \r",
 				"    '\", \"position\": \"' + toString(position) + \r",
 				"    '\", \"height\": \"' + toString(height) +\r",
 				"    '\", \"weight\": \"' + toString(weight) + \r",
@@ -417,15 +417,20 @@
 				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
 				"derivedReceiveAverage filter(position == 'RB') ~> filterRBrc",
 				"derivedJson select(mapColumn(",
-				"          testJson",
+				"          testJson = jsonObject",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectJson",
+				"selectJson sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     format: 'document',",
+				"     partitionKey: ['/id'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     format: 'document') ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
