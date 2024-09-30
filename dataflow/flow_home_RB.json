@@ -26,7 +26,15 @@
 					"name": "sourcePlayerProfile"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dataset_3S_NFL_Train_Player_Profile_RB",
+						"type": "DatasetReference"
+					},
+					"name": "RBHomeTrain"
+				}
+			],
 			"transformations": [
 				{
 					"name": "selectStatsNode"
@@ -83,9 +91,6 @@
 					"name": "flattenPassing"
 				},
 				{
-					"name": "derivedQBR"
-				},
-				{
 					"name": "derivedGamePlayerID2"
 				},
 				{
@@ -137,6 +142,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     limit: 25,",
 				"     format: 'document',",
 				"     systemColumns: true) ~> sourceGameStatistics",
 				"source(output(",
@@ -244,12 +250,14 @@
 				"          rc_touchdowns,",
 				"          rc_longest_touchdown,",
 				"          rc_yards_after_catch,",
+				"          rc_avg_yards,",
 				"          ps_attempts,",
 				"          ps_completions,",
 				"          ps_yards,",
 				"          ps_touchdowns,",
 				"          cmp_pct,",
-				"          passer_rating,",
+				"          ps_rating,",
+				"          ps_avg_yards,",
 				"          roof,",
 				"          surface,",
 				"          interceptions,",
@@ -320,18 +328,13 @@
 				"          interceptions = statistics.home.passing.players.interceptions,",
 				"          sacks = statistics.home.passing.players.sacks,",
 				"          sack_yards = statistics.home.passing.players.sack_yards,",
-				"          ps_touchdowns = statistics.home.passing.players.touchdowns",
+				"          ps_touchdowns = statistics.home.passing.players.touchdowns,",
+				"          ps_rating = statistics.home.passing.players.rating,",
+				"          ps_avg_yards = statistics.home.passing.players.avg_yards",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenPassing",
-				"flattenPassing derive(passer_rating = iif(ps_attempts > 0, round(\r",
-				" (((((ps_completions/ps_attempts) - .3)*5) +\r",
-				" ((ps_yards/ps_attempts-3)*.25)+\r",
-				" ((ps_touchdowns/ps_attempts)*20)+\r",
-				" (2.375-((interceptions/ps_attempts)*25)))/6)*100\r",
-				"\r",
-				",6), toDouble(0.00))) ~> derivedQBR",
-				"derivedQBR derive(gamePlayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID2",
+				"flattenPassing derive(gamePlayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID2",
 				"joinRsRc, derivedGamePlayerID2 join(derivedGamePlayerID1@gameplayerID == derivedGamePlayerID2@gamePlayerID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
@@ -373,19 +376,19 @@
 				"                ' \"receptions\": ' + toString(receptions) + \r",
 				"                ', \"targets\": ' + toString(targets) + \r",
 				"                ', \"rc_yards\": ' + toString(rc_yards) +\r",
-				"                ', \"rc_avg_yards\": ' + toString(rc_touchdowns) +\r",
+				"                ', \"rc_avg_yards\": ' + toString(rc_avg_yards) +\r",
 				"                ', \"rc_yards_after_catch\": ' + toString(rc_yards_after_catch) +\r",
 				"                ', \"rc_touchdowns\": ' + toString(rc_touchdowns) +\r",
-				"                ', \"rs_touchdowns_longest\": ' + toString(rc_longest_touchdown) +\r",
+				"                ', \"rc_touchdowns_longest\": ' + toString(rc_longest_touchdown) +\r",
 				"            '},'+\r",
 				"            '\"passing\": {' + \r",
 				"                ' \"ps_attempts\": ' + toString(ps_attempts) + \r",
 				"                ', \"ps_yards\": ' + toString(ps_yards) + \r",
+				"                ', \"ps_avg_yards\": ' + toString(ps_avg_yards) + \r",
 				"                ', \"ps_completions\": ' + toString(ps_completions) + \r",
 				"                ', \"ps_touchdowns\": ' + toString(ps_touchdowns) +\r",
-				"                ', \"ps_touchdowns_longest\": ' + toString(rs_longest_touchdown) +\r",
 				"                ', \"interceptions\": ' + toString(interceptions) +\r",
-				"                ', \"qbr\": ' + toString(passer_rating) +\r",
+				"                ', \"ps_rating\": ' + toString(ps_rating) +\r",
 				"\r",
 				"            '},'+\r",
 				"            '\"fumble\": {' + \r",
@@ -418,7 +421,16 @@
 				"flattenHomeRushing derive(rs_avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedRushAverage",
 				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)\r",
 				") ~> derivedReceiveAverage",
-				"derivedReceiveAverage filter(position == 'RB') ~> filterRBrc"
+				"derivedReceiveAverage filter(position == 'RB') ~> filterRBrc",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'document',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> RBHomeTrain"
 			]
 		}
 	}
