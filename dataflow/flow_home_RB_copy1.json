@@ -118,7 +118,10 @@
 					"name": "selectJson"
 				},
 				{
-					"name": "flatten1"
+					"name": "flattenFG"
+				},
+				{
+					"name": "derivedGamePlayerID4"
 				}
 			],
 			"scriptLines": [
@@ -426,7 +429,8 @@
 				"          fg_pct = statistics.home.field_goals.players.pct",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"     skipDuplicateMapOutputs: false) ~> flattenFG",
+				"flattenFG derive(gamePlayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID4",
 				"selectJson sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
