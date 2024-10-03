@@ -1,5 +1,5 @@
 {
-	"name": "flow_home_RB_copy1",
+	"name": "dataflow_NFL_to_Train",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -122,6 +122,9 @@
 				},
 				{
 					"name": "derivedGamePlayerID4"
+				},
+				{
+					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -406,7 +409,7 @@
 				"        ' }' +\r",
 				"        \r",
 				"' }') ~> derivedJson",
-				"joinFumbles derive(fumbleNulls = iif(isNull(lost_fumbles), 0, lost_fumbles),",
+				"join1 derive(fumbleNulls = iif(isNull(lost_fumbles), 0, lost_fumbles),",
 				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles",
 				"flattenHomeRushing derive(rs_avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedRushAverage",
 				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
@@ -431,6 +434,11 @@
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenFG",
 				"flattenFG derive(gamePlayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID4",
+				"joinFumbles, derivedGamePlayerID4 join(derivedGamePlayerID1@gameplayerID == derivedGamePlayerID4@gamePlayerID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
 				"selectJson sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
