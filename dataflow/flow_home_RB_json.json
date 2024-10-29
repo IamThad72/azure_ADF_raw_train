@@ -28,10 +28,6 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "datasetNFLTrain",
-						"type": "DatasetReference"
-					},
 					"name": "sink1"
 				}
 			],
@@ -109,9 +105,6 @@
 					"name": "joinFumbles"
 				},
 				{
-					"name": "derivedJson"
-				},
-				{
 					"name": "derivedNoFumbles"
 				},
 				{
@@ -122,12 +115,12 @@
 				},
 				{
 					"name": "filterRBrc"
-				},
-				{
-					"name": "selectJson"
 				}
 			],
 			"scriptLines": [
+				"parameters{",
+				"     parameter1 as string",
+				"}",
 				"source(output(",
 				"          status as string,",
 				"          scheduled as string,",
@@ -358,79 +351,16 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> joinFumbles",
-				"derivedAgeinYears derive(jsonObject = '{ \"id\": \"' + gameplayerID + \r",
-				"    '\", \"position\": \"' + toString(position) + \r",
-				"    '\", \"height\": \"' + toString(height) +\r",
-				"    '\", \"weight\": \"' + toString(weight) + \r",
-				"    '\", \"age_in_days\": ' + toString(player_age_days) + \r",
-				"    ', \"health\":\"NA\",' +\r",
-				"    '  \"stats\": { ' +\r",
-				"            '\"rushing\": {' + \r",
-				"                ' \"rs_attempts\": ' + toString(rs_attempts) + \r",
-				"                ', \"rs_yards\": ' + toString(rs_yards) + \r",
-				"                ', \"rs_avg_yards\": ' + toString(rs_avg_yards) +\r",
-				"                ', \"rs_touchdowns\": ' + toString(rs_touchdowns) +\r",
-				"                ', \"rs_touchdowns_longest\": ' + toString(rs_longest_touchdown) +\r",
-				"            '},'+\r",
-				"            '\"receiving\": {' + \r",
-				"                ' \"receptions\": ' + toString(receptions) + \r",
-				"                ', \"targets\": ' + toString(targets) + \r",
-				"                ', \"rc_yards\": ' + toString(rc_yards) +\r",
-				"                ', \"rc_avg_yards\": ' + toString(rc_avg_yards) +\r",
-				"                ', \"rc_yards_after_catch\": ' + toString(rc_yards_after_catch) +\r",
-				"                ', \"rc_touchdowns\": ' + toString(rc_touchdowns) +\r",
-				"                ', \"rc_touchdowns_longest\": ' + toString(rc_longest_touchdown) +\r",
-				"            '},'+\r",
-				"            '\"passing\": {' + \r",
-				"                ' \"ps_attempts\": ' + toString(ps_attempts) + \r",
-				"                ', \"ps_yards\": ' + toString(ps_yards) + \r",
-				"                ', \"ps_avg_yards\": ' + toString(ps_avg_yards) + \r",
-				"                ', \"ps_completions\": ' + toString(ps_completions) + \r",
-				"                ', \"ps_touchdowns\": ' + toString(ps_touchdowns) +\r",
-				"                ', \"interceptions\": ' + toString(interceptions) +\r",
-				"                ', \"ps_rating\": ' + toString(ps_rating) +\r",
-				"\r",
-				"            '},'+\r",
-				"            '\"fumble\": {' + \r",
-				"                ' \"fumbles\": ' + toString(fumbles) + \r",
-				"                ',\"fumbles_Lost\": ' + toString(lost_fumbles) + \r",
-				"            '}'+\r",
-				"          ' },' +\r",
-				"    ' \"conditions\": { '+\r",
-				"            '\"date\": \"' + toString(scheduled) +\r",
-				"            '\",\"precipitation\":\"NA\"' +\r",
-				"            ',\"temperature\":\"NA\"' +\r",
-				"            ',\"wind\":\"NA\"' +\r",
-				"            ',\"surface\": \"' + toString(surface) +\r",
-				"            '\",\"roof\": \"' + toString(roof) + \r",
-				"            '\",\"side\":\"home\" ' +\r",
-				"            ',\"location\":{' +\r",
-				"                 '\"lat\": ' + toString(lat) +\r",
-				"              ',\"lng\": ' + toString(lng) + \r",
-				"            '}' + \r",
-				"        ' }' +\r",
-				"        \r",
-				"' }') ~> derivedJson",
 				"joinFumbles derive(fumbleNulls = iif(isNull(lost_fumbles), 0, lost_fumbles),",
 				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles",
 				"flattenHomeRushing derive(rs_avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedRushAverage",
 				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
 				"derivedReceiveAverage filter(position == 'RB') ~> filterRBrc",
-				"derivedJson select(mapColumn(",
-				"          jsonObject",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectJson",
-				"selectJson sink(allowSchemaDrift: true,",
+				"derivedAgeinYears sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:true,",
-				"     format: 'document',",
-				"     partitionKey: ['/id'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     format: 'document') ~> sink1"
 			]
 		}
 	}
