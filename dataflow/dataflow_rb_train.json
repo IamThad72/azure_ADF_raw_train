@@ -39,8 +39,6 @@
 				"          scheduled,",
 				"          utc_offset,",
 				"          statistics,",
-				"          venue_lat = summary.venue.location.lat,",
-				"          venue_lng = summary.venue.location.lng,",
 				"          venue_roof_type = summary.venue.roof_type,",
 				"          venue_surface = summary.venue.surface,",
 				"          id = summary.venue.id",
