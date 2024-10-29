@@ -15,7 +15,7 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "select1"
+					"name": "SelectGeneral"
 				}
 			],
 			"scriptLines": [
@@ -38,13 +38,18 @@
 				"sourceNflStats select(mapColumn(",
 				"          scheduled,",
 				"          utc_offset,",
-				"          statistics,",
 				"          venue_roof_type = summary.venue.roof_type,",
 				"          venue_surface = summary.venue.surface,",
-				"          id = summary.venue.id",
+				"          id = summary.venue.id,",
+				"          home_rush = statistics.home.rushing.players,",
+				"          away_rush = statistics.away.rushing.players,",
+				"          home_rec = statistics.home.receiving.players,",
+				"          away_rec = statistics.away.receiving.players,",
+				"          home_pass = statistics.home.passing.players,",
+				"          away_pass = statistics.away.passing.players",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> SelectGeneral"
 			]
 		}
 	}
