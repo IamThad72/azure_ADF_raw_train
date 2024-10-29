@@ -154,8 +154,6 @@
 				"          scheduled,",
 				"          utc_offset,",
 				"          statistics,",
-				"          game_id = id,",
-				"          venue_id = summary.venue.id,",
 				"          roof = summary.venue.roof_type,",
 				"          surface = summary.venue.surface",
 				"     ),",
