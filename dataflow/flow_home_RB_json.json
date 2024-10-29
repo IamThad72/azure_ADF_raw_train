@@ -1,5 +1,5 @@
 {
-	"name": "flow_home_RB",
+	"name": "flow_home_RB_json",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
