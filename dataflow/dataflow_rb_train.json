@@ -16,6 +16,9 @@
 			"transformations": [
 				{
 					"name": "SelectGeneral"
+				},
+				{
+					"name": "homeRush"
 				}
 			],
 			"scriptLines": [
@@ -49,7 +52,15 @@
 				"          away_pass = statistics.away.passing.players",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectGeneral"
+				"     skipDuplicateMapOutputs: true) ~> SelectGeneral",
+				"SelectGeneral foldDown(unroll(home_rush),",
+				"     mapColumn(",
+				"          id = home_rush.id,",
+				"          position = home_rush.position,",
+				"          player_name = home_rush.name",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> homeRush"
 			]
 		}
 	}
