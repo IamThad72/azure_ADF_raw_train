@@ -5,14 +5,11 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "source1"
-				},
-				{
 					"dataset": {
 						"referenceName": "dataset_3S_NFL_Raw_Game_Statistics",
 						"type": "DatasetReference"
 					},
-					"name": "source2"
+					"name": "sourceNflStats"
 				}
 			],
 			"sinks": [],
@@ -22,8 +19,6 @@
 				}
 			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
 				"source(output(",
 				"          status as string,",
 				"          scheduled as string,",
@@ -38,16 +33,17 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'document') ~> source2",
-				"source2 select(mapColumn(",
-				"          status,",
+				"     format: 'document',",
+				"     systemColumns: true) ~> sourceNflStats",
+				"sourceNflStats select(mapColumn(",
 				"          scheduled,",
-				"          attendance,",
 				"          utc_offset,",
-				"          entry_mode,",
-				"          quarter,",
 				"          statistics,",
-				"          {_comment}",
+				"          venue_lat = summary.venue.location.lat,",
+				"          venue_lng = summary.venue.location.lng,",
+				"          venue_roof_type = summary.venue.roof_type,",
+				"          venue_surface = summary.venue.surface,",
+				"          id = summary.venue.id",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1"
