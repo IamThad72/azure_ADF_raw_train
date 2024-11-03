@@ -102,6 +102,9 @@
 				},
 				{
 					"name": "derivedReceiveAverage"
+				},
+				{
+					"name": "DateTrim"
 				}
 			],
 			"scriptLines": [
@@ -336,7 +339,9 @@
 				"joinFumbles derive(fumbleNulls = iif(isNull(lost_fumbles), 0, lost_fumbles),",
 				"          fumbleLostNulls = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles",
 				"flattenHomeRushing derive(rs_avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedRushAverage",
-				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage"
+				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
+				"derivedAgeinYears derive(game_day = substring(scheduled, 0, 19)\r",
+				") ~> DateTrim"
 			]
 		}
 	}
