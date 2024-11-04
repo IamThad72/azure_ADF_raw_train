@@ -1,0 +1,16 @@
+{
+	"name": "dataset_3S_NFL_Offense",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "nfl_offense"
+		}
+	}
+}
