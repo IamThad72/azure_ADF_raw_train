@@ -1,5 +1,5 @@
 {
-	"name": "dataset_3S_NFL_Offense",
+	"name": "dataset_3S_NFL_Offense_Train",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
