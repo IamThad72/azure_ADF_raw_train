@@ -13,7 +13,8 @@
 				"timeZone": "Eastern Standard Time",
 				"schedule": {
 					"monthDays": [
-						1
+						1,
+						-1
 					]
 				}
 			}
