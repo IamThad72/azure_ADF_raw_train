@@ -115,9 +115,6 @@
 					"name": "DateTrim"
 				},
 				{
-					"name": "AlterRow1"
-				},
-				{
 					"name": "homeTeam"
 				}
 			],
@@ -357,10 +354,8 @@
 				"flattenHomeRushing derive(rs_avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedRushAverage",
 				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
 				"derivedAgeinYears derive(game_date = substring(scheduled, 0, 19)) ~> DateTrim",
-				"DateTrim alterRow(insertIf(isNull(gameplayerID)),",
-				"     updateIf(!isNull(gameplayerID))) ~> AlterRow1",
 				"derivedNoFumbles derive(vn_type = 'H') ~> homeTeam",
-				"AlterRow1 sink(allowSchemaDrift: false,",
+				"DateTrim sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",
 				"          gameplayerID as string,",
@@ -433,8 +428,7 @@
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",
-				"     upsertable:true,",
-				"     keys:['gameplayerID'],",
+				"     upsertable:false,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
