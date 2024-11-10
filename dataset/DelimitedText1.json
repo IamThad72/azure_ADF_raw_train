@@ -10,12 +10,14 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "crap.csv",
+				"folderPath": "crap",
 				"container": "2024"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
-			"firstRowAsHeader": true,
-			"quoteChar": "\""
+			"firstRowAsHeader": false,
+			"quoteChar": null
 		},
 		"schema": []
 	}
