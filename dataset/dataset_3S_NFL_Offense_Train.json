@@ -7,7 +7,290 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "id",
+				"type": "varchar"
+			},
+			{
+				"name": "game_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "player_name",
+				"type": "varchar"
+			},
+			{
+				"name": "position",
+				"type": "char"
+			},
+			{
+				"name": "height",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "weight",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "age_in_days",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "age_in_years",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "rs_attempts",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rs_yards",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rs_avg_yards",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "rs_touchdowns",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rs_longest_touchdown",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "receptions",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "targets",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rc_yards",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rc_avg_yards",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "yac",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rc_touchdowns",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rc_longest_touchdown",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ps_attempts",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ps_yards",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ps_completions",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ps_avg_yards",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "ps_touchdowns",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ps_longest_touchdown",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ps_interceptions",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ps_sacks",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ps_sack_yards",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ps_rating",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "df_points_allowed",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "df_sacks",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "df_interceptions",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "df_fumbles_recovered",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "df_touchdowns",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "df_safeties",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "df_yards_allowed",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "df_blocked_kicks",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_pat",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_pat_miss",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_fg_39",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st-fg_49",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_fg_50",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_fg_miss",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_pt_avg_yards",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_pt_net_yards",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_pt_20",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_punt_10",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_pt_touchback",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_pt_block",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "st_pt_hang_time",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "wt_lat",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "wt_lng",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "wt_temp",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "wt_precip",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "wt_wind_speed",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "wt_desc",
+				"type": "varchar"
+			}
+		],
 		"typeProperties": {
 			"schema": "dbo",
 			"table": "nfl_offense"
