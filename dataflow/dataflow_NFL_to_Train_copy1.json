@@ -59,7 +59,13 @@
 					"name": "flattenHomeFumbles"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "join1"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "join3"
 				}
 			],
 			"scriptLines": [
@@ -139,7 +145,6 @@
 				"          scheduled,",
 				"          utc_offset,",
 				"          game_id,",
-				"          vn_id = venue_id,",
 				"          player_id = statistics.home.receiving.players.id,",
 				"          player_name = statistics.home.receiving.players.name,",
 				"          position = statistics.home.receiving.players.position,",
@@ -194,7 +199,6 @@
 				"          scheduled,",
 				"          utc_offset,",
 				"          game_id,",
-				"          vn_id = venue_id,",
 				"          player_id = statistics.home.passing.players.id,",
 				"          player_name = statistics.home.passing.players.name,",
 				"          position = statistics.home.passing.players.position,",
@@ -223,7 +227,30 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeFumbles",
-				"flattenHomeFumbles derive(gameplayerID = toString(game_id + '|' + player_id)) ~> derivedColumn1"
+				"flattenHomeRushing, flattenHomeReceiving join(flattenHomeRushing@game_id == flattenHomeReceiving@game_id",
+				"     && flattenHomeRushing@player_id == flattenHomeReceiving@player_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1, flattenPassing join(flattenHomeRushing@game_id == flattenPassing@game_id",
+				"     && flattenHomeReceiving@game_id == flattenPassing@game_id",
+				"     && flattenHomeRushing@player_id == flattenPassing@player_id",
+				"     && flattenHomeReceiving@player_id == flattenPassing@player_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2, flattenHomeFumbles join(flattenHomeRushing@game_id == flattenHomeFumbles@game_id",
+				"     && flattenHomeReceiving@game_id == flattenHomeFumbles@game_id",
+				"     && flattenPassing@game_id == flattenHomeFumbles@game_id",
+				"     && flattenHomeRushing@player_id == flattenHomeFumbles@player_id",
+				"     && flattenHomeReceiving@player_name == flattenHomeFumbles@player_id",
+				"     && flattenPassing@player_id == flattenHomeFumbles@player_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join3"
 			]
 		}
 	}
