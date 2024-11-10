@@ -288,7 +288,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenVenue",
-				"selectPlayerGameStats, flattenVenue join(selectPlayerGameStats@venue_id == flattenVenue@venue_id,",
+				"selectPlayerGameStats, flattenVenue join(selectPlayerGameStats@venue_id == flattenVenue@vn_id,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
