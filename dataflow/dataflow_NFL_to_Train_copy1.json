@@ -66,6 +66,9 @@
 				},
 				{
 					"name": "join3"
+				},
+				{
+					"name": "derivedNoFumbles"
 				}
 			],
 			"scriptLines": [
@@ -250,7 +253,9 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join3"
+				"     broadcast: 'auto')~> join3",
+				"flattenHomeFumbles derive(fumblesNull = iif(isNull(lost_fumbles), 0, lost_fumbles),",
+				"          fumblesLost = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles"
 			]
 		}
 	}
