@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "flow_home_RB",
+						"referenceName": "dataflow_NFL_to_Train",
 						"type": "DataFlowReference"
 					},
 					"compute": {
