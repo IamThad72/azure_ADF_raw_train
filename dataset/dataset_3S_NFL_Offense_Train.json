@@ -9,14 +9,16 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "id",
+				"name": "gameplayerID",
 				"type": "varchar"
 			},
 			{
 				"name": "game_date",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
+				"type": "date"
+			},
+			{
+				"name": "player_id",
+				"type": "varchar"
 			},
 			{
 				"name": "player_name",
@@ -77,7 +79,7 @@
 				"precision": 10
 			},
 			{
-				"name": "targets",
+				"name": "rc_targets",
 				"type": "int",
 				"precision": 10
 			},
@@ -92,7 +94,7 @@
 				"precision": 15
 			},
 			{
-				"name": "yac",
+				"name": "rc_yac",
 				"type": "int",
 				"precision": 10
 			},
@@ -262,33 +264,68 @@
 				"precision": 15
 			},
 			{
-				"name": "wt_lat",
+				"name": "vn_id",
+				"type": "varchar"
+			},
+			{
+				"name": "vn_type",
+				"type": "varchar"
+			},
+			{
+				"name": "vn_name",
+				"type": "varchar"
+			},
+			{
+				"name": "vn_surface",
+				"type": "varchar"
+			},
+			{
+				"name": "vn_roof_type",
+				"type": "varchar"
+			},
+			{
+				"name": "vn_lat",
 				"type": "float",
 				"precision": 15
 			},
 			{
-				"name": "wt_lng",
+				"name": "vn_lng",
 				"type": "float",
 				"precision": 15
 			},
 			{
-				"name": "wt_temp",
+				"name": "vn_temp",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "wt_precip",
+				"name": "vn_precip",
 				"type": "float",
 				"precision": 15
 			},
 			{
-				"name": "wt_wind_speed",
+				"name": "vn_wind_speed",
 				"type": "float",
 				"precision": 15
 			},
 			{
-				"name": "wt_desc",
+				"name": "vn_desc",
 				"type": "varchar"
+			},
+			{
+				"name": "fumbles",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "fumbles_lost",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ps_cmp_pct",
+				"type": "float",
+				"precision": 15
 			}
 		],
 		"typeProperties": {
