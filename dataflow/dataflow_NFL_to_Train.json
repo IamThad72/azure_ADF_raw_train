@@ -472,10 +472,15 @@
 				"          ps_sacks,",
 				"          ps_sack_yards,",
 				"          ps_rating,",
-				"          fumbles,",
-				"          fumbles_lost,",
 				"          vn_id = selectPlayerGameStats@vn_id,",
-				"          vn_name",
+				"          vn_name,",
+				"          vn_type,",
+				"          vn_surface,",
+				"          vn_roof_type,",
+				"          vn_lat,",
+				"          vn_lng,",
+				"          fumbles,",
+				"          fumbles_lost",
 				"     )) ~> sink1"
 			]
 		}
