@@ -116,9 +116,6 @@
 				},
 				{
 					"name": "homeTeam"
-				},
-				{
-					"name": "AlterRow1"
 				}
 			],
 			"scriptLines": [
@@ -362,9 +359,7 @@
 				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
 				"derivedAgeinYears derive(game_date = substring(scheduled, 0, 19)) ~> DateTrim",
 				"derivedNoFumbles derive(vn_type = 'H') ~> homeTeam",
-				"DateTrim alterRow(insertIf(isNull(gameplayerID)),",
-				"     updateIf(!isNull(gameplayerID))) ~> AlterRow1",
-				"AlterRow1 sink(allowSchemaDrift: false,",
+				"DateTrim sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",
 				"          gameplayerID as string,",
@@ -437,9 +432,8 @@
 				"     stagingSchemaName: 'dbo',",
 				"     deletable:false,",
 				"     insertable:true,",
-				"     updateable:true,",
-				"     upsertable:true,",
-				"     keys:['gameplayerID'],",
+				"     updateable:false,",
+				"     upsertable:false,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
