@@ -10,8 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "testOffenseOutput",
-				"folderPath": "nflTest",
 				"container": "2024"
 			},
 			"columnDelimiter": ",",
