@@ -10,7 +10,7 @@
 		"schema": [
 			{
 				"name": "gameplayerID",
-				"type": "varchar"
+				"type": "nvarchar"
 			},
 			{
 				"name": "game_date",
@@ -122,6 +122,11 @@
 				"name": "ps_completions",
 				"type": "int",
 				"precision": 10
+			},
+			{
+				"name": "ps_cmp_pct",
+				"type": "float",
+				"precision": 15
 			},
 			{
 				"name": "ps_avg_yards",
@@ -268,11 +273,11 @@
 				"type": "varchar"
 			},
 			{
-				"name": "vn_type",
+				"name": "vn_name",
 				"type": "varchar"
 			},
 			{
-				"name": "vn_name",
+				"name": "vn_type",
 				"type": "varchar"
 			},
 			{
@@ -309,7 +314,7 @@
 				"precision": 15
 			},
 			{
-				"name": "vn_desc",
+				"name": "vn_weather_desc",
 				"type": "varchar"
 			},
 			{
@@ -321,11 +326,6 @@
 				"name": "fumbles_lost",
 				"type": "int",
 				"precision": 10
-			},
-			{
-				"name": "ps_cmp_pct",
-				"type": "float",
-				"precision": 15
 			}
 		],
 		"typeProperties": {
