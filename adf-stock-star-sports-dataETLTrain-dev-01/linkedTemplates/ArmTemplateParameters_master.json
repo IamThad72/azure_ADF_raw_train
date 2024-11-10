@@ -11,9 +11,6 @@
 		"linkedservice_3S_NFL_Raw_Source_connectionString": {
 			"value": ""
 		},
-		"linkedservice_3S_NFL_Train_Target_connectionString": {
-			"value": ""
-		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"value": "3s-train.database.windows.net"
 		},

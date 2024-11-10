@@ -15,10 +15,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'linkedservice_3S_NFL_Raw_Source'"
 		},
-		"linkedservice_3S_NFL_Train_Target_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'linkedservice_3S_NFL_Train_Target'"
-		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "3s-train.database.windows.net"
@@ -63,9 +59,6 @@
 					},
 					"linkedservice_3S_NFL_Raw_Source_connectionString": {
 						"value": "[parameters('linkedservice_3S_NFL_Raw_Source_connectionString')]"
-					},
-					"linkedservice_3S_NFL_Train_Target_connectionString": {
-						"value": "[parameters('linkedservice_3S_NFL_Train_Target_connectionString')]"
 					},
 					"AzureSqlDatabase1_properties_typeProperties_server": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
