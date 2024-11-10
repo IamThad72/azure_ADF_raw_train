@@ -430,7 +430,7 @@
 				"          ps_cmp_pct as double",
 				"     ),",
 				"     deletable:false,",
-				"     insertable:true,",
+				"     insertable:false,",
 				"     updateable:false,",
 				"     upsertable:true,",
 				"     keys:['gameplayerID'],",
