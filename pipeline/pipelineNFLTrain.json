@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ETL_NFL_RB_HOME",
+				"name": "LOAD_NFL_TRAIN",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
