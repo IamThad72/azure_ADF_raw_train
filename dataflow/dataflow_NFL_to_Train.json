@@ -116,6 +116,9 @@
 				},
 				{
 					"name": "homeTeam"
+				},
+				{
+					"name": "AlterRow1"
 				}
 			],
 			"scriptLines": [
@@ -133,6 +136,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     limit: 100,",
 				"     format: 'document',",
 				"     systemColumns: true) ~> sourceGameStatistics",
 				"source(output(",
@@ -327,7 +331,8 @@
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenPassing",
 				"flattenPassing derive(gameplayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID2",
-				"joinRsRc, derivedGamePlayerID2 join(derivedGamePlayerID1@gameplayerID == derivedGamePlayerID2@gameplayerID,",
+				"joinRsRc, derivedGamePlayerID2 join(derivedGamePlayerID1@gameplayerID == derivedGamePlayerID2@gameplayerID",
+				"     && derivedGamePlayerID0@gameplayerID == derivedGamePlayerID2@gameplayerID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -344,7 +349,9 @@
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flattenHomeFumbles",
 				"flattenHomeFumbles derive(gamePlayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID3",
-				"joinRsRcPs, derivedGamePlayerID3 join(derivedGamePlayerID2@gameplayerID == derivedGamePlayerID3@gamePlayerID,",
+				"joinRsRcPs, derivedGamePlayerID3 join(derivedGamePlayerID2@gameplayerID == derivedGamePlayerID3@gamePlayerID",
+				"     && derivedGamePlayerID1@gameplayerID == derivedGamePlayerID3@gamePlayerID",
+				"     && derivedGamePlayerID0@gameplayerID == derivedGamePlayerID3@gamePlayerID,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -355,7 +362,9 @@
 				"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
 				"derivedAgeinYears derive(game_date = substring(scheduled, 0, 19)) ~> DateTrim",
 				"derivedNoFumbles derive(vn_type = 'H') ~> homeTeam",
-				"DateTrim sink(allowSchemaDrift: false,",
+				"DateTrim alterRow(insertIf(isNull(gameplayerID)),",
+				"     updateIf(!isNull(gameplayerID))) ~> AlterRow1",
+				"AlterRow1 sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",
 				"          gameplayerID as string,",
@@ -426,9 +435,10 @@
 				"          fumbles_lost as integer",
 				"     ),",
 				"     deletable:false,",
-				"     insertable:true,",
+				"     insertable:false,",
 				"     updateable:false,",
-				"     upsertable:false,",
+				"     upsertable:true,",
+				"     keys:['gameplayerID'],",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
