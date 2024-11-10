@@ -133,7 +133,6 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     limit: 100,",
 				"     format: 'document',",
 				"     systemColumns: true) ~> sourceGameStatistics",
 				"source(output(",
