@@ -244,7 +244,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join2",
-				"join2, flattenHomeFumbles join(flattenHomeRushing@game_id == flattenHomeFumbles@game_id",
+				"join2, derivedNoFumbles join(flattenHomeRushing@game_id == flattenHomeFumbles@game_id",
 				"     && flattenHomeReceiving@game_id == flattenHomeFumbles@game_id",
 				"     && flattenPassing@game_id == flattenHomeFumbles@game_id",
 				"     && flattenHomeRushing@player_id == flattenHomeFumbles@player_id",
