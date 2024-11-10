@@ -5,11 +5,23 @@
 		"factoryName": {
 			"value": "adf-stock-star-sports-dataETLTrain-dev-01"
 		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
 		"linkedservice_3S_NFL_Raw_Source_connectionString": {
 			"value": ""
 		},
 		"linkedservice_3S_NFL_Train_Target_connectionString": {
 			"value": ""
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "3s-train.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "sql_3s_nfl_train"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "iamceo"
 		}
 	}
 }
