@@ -32,11 +32,7 @@
 						"referenceName": "DelimitedText1",
 						"type": "DatasetReference"
 					},
-					"name": "sink1",
-					"rejectedDataLinkedService": {
-						"referenceName": "AzureBlobStorage1",
-						"type": "LinkedServiceReference"
-					}
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -365,51 +361,7 @@
 				"DateTrim sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     mapColumn(",
-				"          gameplayerID,",
-				"          game_date,",
-				"          player_id = selectPlayerGameStats@player_id,",
-				"          player_name,",
-				"          position,",
-				"          height,",
-				"          weight,",
-				"          age_in_days = player_age_days,",
-				"          age_in_years = player_age_years,",
-				"          rs_attempts,",
-				"          rs_yards,",
-				"          rs_avg_yards,",
-				"          rs_touchdowns,",
-				"          rs_longest_touchdown,",
-				"          receptions,",
-				"          rc_targets,",
-				"          rc_yards,",
-				"          rc_avg_yards,",
-				"          rc_yac,",
-				"          rc_touchdowns,",
-				"          rc_longest_touchdown,",
-				"          ps_attempts,",
-				"          ps_yards,",
-				"          ps_completions,",
-				"          ps_cmp_pct = ps_com_pct,",
-				"          ps_avg_yards,",
-				"          ps_touchdowns,",
-				"          ps_longest_touchdown,",
-				"          ps_interceptions = Ps_interceptions,",
-				"          ps_sacks,",
-				"          ps_sack_yards,",
-				"          ps_rating,",
-				"          vn_id = selectPlayerGameStats@vn_id,",
-				"          vn_name,",
-				"          vn_type,",
-				"          vn_surface,",
-				"          vn_roof_type,",
-				"          vn_lat,",
-				"          vn_lng,",
-				"          fumbles,",
-				"          fumbles_lost",
-				"     ),",
-				"     format: 'table') ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
