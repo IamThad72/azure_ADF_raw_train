@@ -69,6 +69,9 @@
 				},
 				{
 					"name": "derivedNoFumbles"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -255,7 +258,40 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join3",
 				"join3 derive(fumblesNull = iif(isNull(lost_fumbles), 0, lost_fumbles),",
-				"          fumblesLost = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles"
+				"          fumblesLost = iif(isNull(lost_fumbles), 0, lost_fumbles)) ~> derivedNoFumbles",
+				"derivedNoFumbles select(mapColumn(",
+				"          scheduled = flattenHomeRushing@scheduled,",
+				"          game_id = flattenHomeRushing@game_id,",
+				"          vn_id,",
+				"          player_id = flattenHomeRushing@player_id,",
+				"          player_name = flattenHomeRushing@player_name,",
+				"          position = flattenHomeRushing@position,",
+				"          rs_attempts,",
+				"          rs_yards,",
+				"          rs_touchdowns,",
+				"          rs_longest_touchdown,",
+				"          rc_targets,",
+				"          receptions,",
+				"          rc_yards,",
+				"          rc_yac,",
+				"          rc_touchdowns,",
+				"          rc_longest_touchdown,",
+				"          ps_attempts,",
+				"          ps_completions,",
+				"          ps_cmp_pct,",
+				"          ps_yards,",
+				"          ps_interceptions,",
+				"          ps_sacks,",
+				"          ps_sack_yards,",
+				"          ps_touchdowns,",
+				"          ps_rating,",
+				"          ps_avg_yards,",
+				"          ps_longest_touchdown,",
+				"          fumbles,",
+				"          lost_fumbles",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}
