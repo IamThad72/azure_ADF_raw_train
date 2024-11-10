@@ -37,54 +37,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/pipelineNFLTrain')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "LOAD_NFL_TRAIN",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow_NFL_to_Train",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"sourceGameStatistics": {},
-									"sourceLeagueHierarchy": {},
-									"sourcePlayerProfile": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 16,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow_NFL_to_Train')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/dataset_3S_NFL_Offense_Train')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -98,7 +50,7 @@
 				"schema": [
 					{
 						"name": "gameplayerID",
-						"type": "varchar"
+						"type": "nvarchar"
 					},
 					{
 						"name": "game_date",
@@ -210,6 +162,11 @@
 						"name": "ps_completions",
 						"type": "int",
 						"precision": 10
+					},
+					{
+						"name": "ps_cmp_pct",
+						"type": "float",
+						"precision": 15
 					},
 					{
 						"name": "ps_avg_yards",
@@ -356,11 +313,11 @@
 						"type": "varchar"
 					},
 					{
-						"name": "vn_type",
+						"name": "vn_name",
 						"type": "varchar"
 					},
 					{
-						"name": "vn_name",
+						"name": "vn_type",
 						"type": "varchar"
 					},
 					{
@@ -397,7 +354,7 @@
 						"precision": 15
 					},
 					{
-						"name": "vn_desc",
+						"name": "vn_weather_desc",
 						"type": "varchar"
 					},
 					{
@@ -409,11 +366,6 @@
 						"name": "fumbles_lost",
 						"type": "int",
 						"precision": 10
-					},
-					{
-						"name": "ps_cmp_pct",
-						"type": "float",
-						"precision": 15
 					}
 				],
 				"typeProperties": {
@@ -4043,9 +3995,6 @@
 							"name": "DateTrim"
 						},
 						{
-							"name": "AlterRow1"
-						},
-						{
 							"name": "homeTeam"
 						}
 					],
@@ -4064,6 +4013,7 @@
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     limit: 100,",
 						"     format: 'document',",
 						"     systemColumns: true) ~> sourceGameStatistics",
 						"source(output(",
@@ -4257,8 +4207,9 @@
 						"     ),",
 						"     skipDuplicateMapInputs: false,",
 						"     skipDuplicateMapOutputs: false) ~> flattenPassing",
-						"flattenPassing derive(gamePlayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID2",
-						"joinRsRc, derivedGamePlayerID2 join(derivedGamePlayerID1@gameplayerID == derivedGamePlayerID2@gamePlayerID,",
+						"flattenPassing derive(gameplayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID2",
+						"joinRsRc, derivedGamePlayerID2 join(derivedGamePlayerID1@gameplayerID == derivedGamePlayerID2@gameplayerID",
+						"     && derivedGamePlayerID0@gameplayerID == derivedGamePlayerID2@gameplayerID,",
 						"     joinType:'inner',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
@@ -4275,7 +4226,9 @@
 						"     skipDuplicateMapInputs: false,",
 						"     skipDuplicateMapOutputs: false) ~> flattenHomeFumbles",
 						"flattenHomeFumbles derive(gamePlayerID = toString(game_id + '|' + player_id)) ~> derivedGamePlayerID3",
-						"joinRsRcPs, derivedGamePlayerID3 join(derivedGamePlayerID2@gamePlayerID == derivedGamePlayerID3@gamePlayerID,",
+						"joinRsRcPs, derivedGamePlayerID3 join(derivedGamePlayerID2@gameplayerID == derivedGamePlayerID3@gamePlayerID",
+						"     && derivedGamePlayerID1@gameplayerID == derivedGamePlayerID3@gamePlayerID",
+						"     && derivedGamePlayerID0@gameplayerID == derivedGamePlayerID3@gamePlayerID,",
 						"     joinType:'left',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
@@ -4285,10 +4238,8 @@
 						"flattenHomeRushing derive(rs_avg_yards = round(toFloat(rs_yards) / toFloat(rs_attempts), 1)) ~> derivedRushAverage",
 						"flattenHomeReceiving derive(rc_avg_yards = iifNull((round(rc_yards/receptions, 2)), 0.00)) ~> derivedReceiveAverage",
 						"derivedAgeinYears derive(game_date = substring(scheduled, 0, 19)) ~> DateTrim",
-						"DateTrim alterRow(insertIf(isNull(gameplayerID)),",
-						"     updateIf(!isNull(gameplayerID))) ~> AlterRow1",
 						"derivedNoFumbles derive(vn_type = 'H') ~> homeTeam",
-						"AlterRow1 sink(allowSchemaDrift: false,",
+						"DateTrim sink(allowSchemaDrift: false,",
 						"     validateSchema: false,",
 						"     input(",
 						"          gameplayerID as string,",
@@ -4315,6 +4266,7 @@
 						"          ps_attempts as integer,",
 						"          ps_yards as integer,",
 						"          ps_completions as integer,",
+						"          ps_cmp_pct as double,",
 						"          ps_avg_yards as double,",
 						"          ps_touchdowns as integer,",
 						"          ps_longest_touchdown as integer,",
@@ -4344,8 +4296,8 @@
 						"          st_pt_block as integer,",
 						"          st_pt_hang_time as double,",
 						"          vn_id as string,",
-						"          vn_type as string,",
 						"          vn_name as string,",
+						"          vn_type as string,",
 						"          vn_surface as string,",
 						"          vn_roof_type as string,",
 						"          vn_lat as double,",
@@ -4353,20 +4305,21 @@
 						"          vn_temp as integer,",
 						"          vn_precip as double,",
 						"          vn_wind_speed as double,",
-						"          vn_desc as string,",
+						"          vn_weather_desc as string,",
 						"          fumbles as integer,",
-						"          fumbles_lost as integer,",
-						"          ps_cmp_pct as double",
+						"          fumbles_lost as integer",
 						"     ),",
+						"     stagingSchemaName: 'dbo',",
 						"     deletable:false,",
-						"     insertable:false,",
+						"     insertable:true,",
 						"     updateable:false,",
-						"     upsertable:true,",
-						"     keys:['gameplayerID'],",
+						"     upsertable:false,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
+						"     errorHandlingOption: 'allErrors',",
+						"     transactionCommit: 'batch',",
+						"     reportSuccessOnError: true,",
 						"     mapColumn(",
 						"          gameplayerID,",
 						"          game_date,",
@@ -4421,38 +4374,51 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/trigger1')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
+			"name": "[concat(parameters('factoryName'), '/pipelineThad')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
+				"activities": [
 					{
-						"pipelineReference": {
-							"referenceName": "pipelineNFLTrain",
-							"type": "PipelineReference"
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
 						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Month",
-						"interval": 15,
-						"startTime": "2024-11-10T12:15:00",
-						"timeZone": "Eastern Standard Time",
-						"schedule": {
-							"monthDays": [
-								1
-							]
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow_NFL_to_Train",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourceGameStatistics": {},
+									"sourceLeagueHierarchy": {},
+									"sourcePlayerProfile": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 32,
+								"computeType": "MemoryOptimized"
+							},
+							"traceLevel": "Fine"
 						}
 					}
-				}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipelineNFLTrain')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow_NFL_to_Train')]"
 			]
 		}
 	]
